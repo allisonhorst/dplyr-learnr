@@ -1,0 +1,269 @@
+/******
+newjellies
+*******/
+
+/*-------- Google font imports --------*/
+
+@import url('https://fonts.googleapis.com/css2?family=Delius&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Boogaloo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Coustard');
+@import url('https://fonts.googleapis.com/css2?family=Jost&display=swap');
+@import url(//fonts.googleapis.com/css?family=Roboto+Mono);
+
+
+/*-------- Background color & body font --------*/
+body {
+  background-color: white;
+  font-family: 'Jost', sans-serif;
+  color: dimgray;
+  font-size: 16px;
+}
+
+/*-------- Main Panel ---------*/
+.topics {
+    width: 75%;
+    overflow-x: auto;
+    padding-bottom: 600px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: white;
+    border-left: 0;
+}
+
+.band {
+    padding-left: 3%;
+    padding-right: 3%;
+    position: relative;
+}
+
+/* Emphasis (e.g. italics) */
+em {
+    font-family: 'Jost', sans-serif;
+    color: dimgray;
+}
+
+/*--------- Headers ---------*/
+
+h2 {
+  color: mediumslateblue;
+  font-family: 'Delius', cursive;
+}
+
+h3 {
+  color: mediumorchid;
+  font-family: 'Delius', cursive;
+}
+
+h4 {
+  color: mediumorchid;
+  font-family: 'Delius', cursive;
+}
+
+h5 {
+    color: mediumorchid;
+    font-family: 'Delius', cursive;
+    font-size: 16px;
+}
+
+/*-------- Code chunk header panel ---------*/
+.panel-default > .panel-heading {
+    color: white;
+    background-color: lightseagreen;
+    border: 0;
+}
+
+/*------- Rectangle panels --------*/
+.panel, pre {
+    border-radius: 0;
+    background-color: lightseagreen;
+    border: 0;
+    font-size: 16px;
+    font: 'Jost', sans-serif
+}
+
+/*-------- Code chunk main panel --------*/
+
+.ace-tm {
+    background-color: white;
+    color: dimgray;
+    border-bottom: 1px solid gainsboro;
+    border-right: 1px solid gainsboro;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 13px;
+}
+
+/*-------- Line # cells --------*/
+
+.ace_gutter-cell {
+    padding-left: 19px;
+    padding-right: 6px;
+    background-repeat: no-repeat;
+    background-color: gainsboro;
+    color: lightseagreen;
+}
+
+/*-------- Code returns --------*/
+.tutorial-exercise-output > pre {
+    max-height: 500px;
+    overflow-y: auto;
+    background-color: gainsboro;
+    color: dimgray;
+    font-size: 13px;
+}
+
+
+/*------- In line code aesthetic --------*/
+code {
+    font-family: 'Roboto Mono', monospace;
+    color: lightseagreen;
+    background-color: gainsboro;
+    font-size: 13px;
+}
+
+/*------- Hyperlinks --------*/
+a {
+    font-family: 'Jost', sans-serif;
+    color: lightseagreen;
+    text-decoration: none;
+}
+
+a:hover, a:focus {
+    color: mediumslateblue;
+    text-decoration: underline;
+}
+
+
+/*------- Main menu -------*/
+.topicsList .topic {
+    font-family: 'Delius', cursive;
+    color: lightseagreen;
+    line-height: 40px;
+    font-size: 20px;
+    padding-left: 10px;
+    cursor: pointer;
+    background-color: white;
+    background-repeat: no-repeat;
+    background-size: 2px 80px;
+    background-position: left 100%;
+        background-position-y: 100%;
+    background-image: url(images/topicProgress.png);
+    border-bottom: 0;
+    border-top: 0;
+    -webkit-transition-property: background-position;
+    transition-property: background-position;
+    -webkit-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+}
+
+/*------- Selected menu item -------*/
+.topicsList .topic.current {
+    font-family: 'Delius', cursive;
+    background-color: mediumslateblue;
+    color: white;
+    border: 0;
+}
+/*--- When hovering ---*/
+.topicsList .topic:hover {
+    background-color: mediumorchid;
+    color: white;
+}
+
+/*------- Solution / Hint buttons -------*/
+.tutorial-exercise-input .btn-tutorial-solution {
+    margin-left: 15px;
+    background-color: mediumorchid;
+    color: white;
+    font-family: 'Delius', cursive;
+    font-size: 14px;
+    border: 0;
+}
+
+/*------- Solution popover --------*/
+.popover-title {
+    margin: 0;
+    padding: 8px 14px;
+    font-size: 14px;
+    background-color: mediumslateblue;
+    border-bottom: 1px solid #ebebeb;
+    border-radius: 5px 5px 0 0;
+    color: white;
+    font-family: 'Delius', cursive;
+}
+
+/*------- Buttons -------*/
+
+.btn-primary, .btn-success, .btn-info, .btn-xs{
+    color: white;
+    background-color: mediumorchid;
+    background-image: none;
+    border: none;
+    font-family: 'Delius', cursive;
+    font-size: 12px;
+    text-shadow: none;
+}
+
+/*------- Buttons when hovering -------*/
+.btn-default:hover, btn-success:hover, btn-info:hover, btn-primary:hover {
+  background-color: mediumslateblue;
+  color: white;
+  font-family: 'Delius', cursive;
+}
+
+/*-------- Code chunk buttons hover aesthetic -------*/
+
+.tutorial-exercise-input .btn-xs{
+    font-size: 12px;
+}
+
+.tutorial-exercise-input .btn-xs:hover {
+    margin-right: 0;
+    margin-top: -1px;
+    font-size: 12px;
+    margin-left: 12px;
+    padding-right: 8px;
+    font-weight: normal;
+    background-color: mediumslateblue;
+    color: white;
+}
+
+/*------- Button disabled -------*/
+.btn-primary.disabled {
+    color: #c8c8c8;
+    background-color: #5a5a5a;
+    background-image: none;
+    border: none;
+    font-family: 'Delius', cursive;
+    text-shadow: none;
+}
+
+/*------- Button default/primary -------*/
+.btn-default {
+    color: white;
+    background-color: mediumorchid;
+    background-image: none;
+    border: none;
+    font-family: 'Delius', cursive;
+    font-size: 14px;
+    text-shadow: none;
+}
+
+.btn-primary {
+    color: white;
+    background-color: mediumorchid;
+    background-image: none;
+    border: none;
+    font-family: 'Delius', cursive;
+    font-size: 14px;
+    text-shadow: none;
+}
+
+/*------- Update Next Section button -------*/
+.topicActions .btn-primary:hover {
+    color: white;
+    background-color: mediumslateblue;
+    background-image: none;
+    border: none;
+    font-family: 'Delius', cursive;
+    text-shadow: none;
+}
+
