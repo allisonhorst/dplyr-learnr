@@ -1,33 +1,31 @@
 /******
-newjellies
+dplyr learnr tutorial
 *******/
 
 /*-------- Google font imports --------*/
 
-@import url('https://fonts.googleapis.com/css2?family=Delius&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Boogaloo&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Coustard');
-@import url('https://fonts.googleapis.com/css2?family=Jost&display=swap');
 @import url(//fonts.googleapis.com/css?family=Roboto+Mono);
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;400;500;700&display=swap');
 
 
 /*-------- Background color & body font --------*/
 body {
   background-color: white;
-  font-family: 'Jost', sans-serif;
-  color: dimgray;
-  font-size: 16px;
+  font-family: 'Tajawal', sans-serif;
+  color: black;
+  font-size: 14px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 /*-------- Main Panel ---------*/
 .topics {
-    width: 75%;
+    width: 70%;
     overflow-x: auto;
     padding-bottom: 600px;
     padding-left: 20px;
     padding-right: 20px;
     background-color: white;
-    border-left: 0;
 }
 
 .band {
@@ -38,37 +36,40 @@ body {
 
 /* Emphasis (e.g. italics) */
 em {
-    font-family: 'Jost', sans-serif;
+    font-family: 'Tajawal', sans-serif;
     color: dimgray;
 }
 
 /*--------- Headers ---------*/
 
 h2 {
-  color: mediumslateblue;
-  font-family: 'Delius', cursive;
+  color: black;
+  font-family: 'Tajawal', sans-serif;
+  font-weight: 500;
 }
 
 h3 {
   color: mediumorchid;
-  font-family: 'Delius', cursive;
+  font-family: 'Tajawal', sans-serif;
+  font-weight: 500;
 }
 
 h4 {
-  color: mediumorchid;
-  font-family: 'Delius', cursive;
+  color: darkmagenta;
+  font-family: 'Tajawal', sans-serif;
+  font-weight: 500;
 }
 
 h5 {
     color: mediumorchid;
-    font-family: 'Delius', cursive;
+    font-family: 'Tajawal', sans-serif;
     font-size: 16px;
 }
 
 /*-------- Code chunk header panel ---------*/
 .panel-default > .panel-heading {
     color: white;
-    background-color: lightseagreen;
+    background-color: darkslateblue;
     border: 0;
 }
 
@@ -78,7 +79,7 @@ h5 {
     background-color: lightseagreen;
     border: 0;
     font-size: 16px;
-    font: 'Jost', sans-serif
+    font: 'Tajawal', sans-serif
 }
 
 /*-------- Code chunk main panel --------*/
@@ -88,6 +89,7 @@ h5 {
     color: dimgray;
     border-bottom: 1px solid gainsboro;
     border-right: 1px solid gainsboro;
+    border-left: 1px solid gainsboro;
     font-family: 'Roboto Mono', monospace;
     font-size: 13px;
 }
@@ -98,31 +100,33 @@ h5 {
     padding-left: 19px;
     padding-right: 6px;
     background-repeat: no-repeat;
-    background-color: gainsboro;
+    background-color: white;
     color: lightseagreen;
+    border-right: gainsboro;
 }
 
 /*-------- Code returns --------*/
 .tutorial-exercise-output > pre {
     max-height: 500px;
     overflow-y: auto;
-    background-color: gainsboro;
+    background-color: white;
     color: dimgray;
     font-size: 13px;
+    border: 1px solid gainsboro;
 }
 
 
 /*------- In line code aesthetic --------*/
 code {
     font-family: 'Roboto Mono', monospace;
-    color: lightseagreen;
-    background-color: gainsboro;
-    font-size: 13px;
+    color: teal;
+    background-color: ghostwhite;
+    font-size: 12px;
 }
 
 /*------- Hyperlinks --------*/
 a {
-    font-family: 'Jost', sans-serif;
+    font-family: 'Tajawal', sans-serif;
     color: lightseagreen;
     text-decoration: none;
 }
@@ -135,11 +139,13 @@ a:hover, a:focus {
 
 /*------- Main menu -------*/
 .topicsList .topic {
-    font-family: 'Delius', cursive;
-    color: lightseagreen;
-    line-height: 40px;
-    font-size: 20px;
-    padding-left: 10px;
+    font-family: 'Tajawal', sans-serif;
+    font-weight: 400;
+    color: teal;
+    line-height: 45px;
+    font-size: 16px;
+    padding-left: 20px;
+    padding-right: 20px;
     cursor: pointer;
     background-color: white;
     background-repeat: no-repeat;
@@ -157,15 +163,19 @@ a:hover, a:focus {
 
 /*------- Selected menu item -------*/
 .topicsList .topic.current {
-    font-family: 'Delius', cursive;
+    font-family: 'Tajawal', sans-serif;
     background-color: mediumslateblue;
     color: white;
     border: 0;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 /*--- When hovering ---*/
 .topicsList .topic:hover {
     background-color: mediumorchid;
     color: white;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 /*------- Solution / Hint buttons -------*/
@@ -173,8 +183,9 @@ a:hover, a:focus {
     margin-left: 15px;
     background-color: mediumorchid;
     color: white;
-    font-family: 'Delius', cursive;
-    font-size: 14px;
+    font-family: 'Tajawal', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
     border: 0;
 }
 
@@ -187,7 +198,7 @@ a:hover, a:focus {
     border-bottom: 1px solid #ebebeb;
     border-radius: 5px 5px 0 0;
     color: white;
-    font-family: 'Delius', cursive;
+    font-family: 'Tajawal', sans-serif;
 }
 
 /*------- Buttons -------*/
@@ -197,7 +208,7 @@ a:hover, a:focus {
     background-color: mediumorchid;
     background-image: none;
     border: none;
-    font-family: 'Delius', cursive;
+    font-family: 'Tajawal', sans-serif;
     font-size: 12px;
     text-shadow: none;
 }
@@ -206,7 +217,7 @@ a:hover, a:focus {
 .btn-default:hover, btn-success:hover, btn-info:hover, btn-primary:hover {
   background-color: mediumslateblue;
   color: white;
-  font-family: 'Delius', cursive;
+  font-family: 'Tajawal', sans-serif;
 }
 
 /*-------- Code chunk buttons hover aesthetic -------*/
@@ -232,7 +243,7 @@ a:hover, a:focus {
     background-color: #5a5a5a;
     background-image: none;
     border: none;
-    font-family: 'Delius', cursive;
+    font-family: 'Tajawal', sans-serif;
     text-shadow: none;
 }
 
@@ -242,7 +253,7 @@ a:hover, a:focus {
     background-color: mediumorchid;
     background-image: none;
     border: none;
-    font-family: 'Delius', cursive;
+    font-family: 'Tajawal', sans-serif;
     font-size: 14px;
     text-shadow: none;
 }
@@ -252,7 +263,7 @@ a:hover, a:focus {
     background-color: mediumorchid;
     background-image: none;
     border: none;
-    font-family: 'Delius', cursive;
+    font-family: 'Tajawal', sans-serif;
     font-size: 14px;
     text-shadow: none;
 }
@@ -263,7 +274,7 @@ a:hover, a:focus {
     background-color: mediumslateblue;
     background-image: none;
     border: none;
-    font-family: 'Delius', cursive;
+    font-family: 'Tajawal', sans-serif;
     text-shadow: none;
 }
 

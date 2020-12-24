@@ -1,6 +1,6 @@
 ---
-title: "Meet some dplyr"
-author: "Allison Horst"
+title: "Meet some `dplyr` functions"
+author: "by Allison Horst"
 output: 
   learnr::tutorial:
     css: css/style.css
@@ -15,16 +15,20 @@ library(kableExtra)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Welcome!
+## 1. Welcome!
 
 
-Hello! We're happy to see you here. In this lesson, you'll learn some basic functions to help you work with data using functions in the `dplyr` package, part of the tidyverse in *R*. 
+Hello! We're happy to see you here. In this lesson, you'll learn some basic functions to help you work with data using functions in the `dplyr` package, part of the `tidyverse` in *R*. 
 
 **Whoa whoa whoa.** Part of the **what** in **what**? 
 
 #### R is a programming language
 
 Don't let that intimidate you. *R* is a cool programming language - which means it's a way for you to give your computer directions to do specific things. That can be basic calculations, complex models, or even making graphs and tables! 
+
+```{r, echo=FALSE, out.width="80%", fig.align = "center"}
+knitr::include_graphics("images/r_learners_sm.jpeg")  
+```
 
 For example, you can use *R* like a regular calculator. Press 'Run' in the area below to run the existing code.
 
@@ -44,13 +48,13 @@ Cool! We see that when we type **code** into those areas (that I'll call 'code c
 
 Now that you know how to run some *R* code in this tutorial...
 
-#### What is the tidyverse?
+#### What is the `tidyverse`?
 
-The [tidyverse](https://www.tidyverse.org/) is a collection of packages that contain useful *functions* for working with and visualizing data. 
+The [`tidyverse`](https://www.tidyverse.org/) is a collection of packages that contain useful *functions* for working with and visualizing data. You don't need to install the `tidyverse` to write or run code in this tutorial, since it's already attached behind the scenes (but you can install it with `install.packages("tidyverse")` to work with it on your own outside of this tutorial).
 
 #### What is `dplyr`?
 
-`dplyr` is one *package* in the tidyverse. It is the home to many functions that make it easier for us to work with data. Those include things like selecting specific columns, deciding which rows to keep, and finding summary statistics for different variables and groups. Sometimes we call these steps part of "data wrangling." 
+`dplyr` is one *package* in the tidyverse. It is the home to many functions that make it easier for us to work with data. Those include things like selecting specific columns, deciding which rows to keep based on whether or not they match our conditions, and finding summary statistics for different variables and groups. Sometimes we call these steps part of "data wrangling." 
 
 ```{r, echo=FALSE, out.width="100%", fig.align = "center"}
 knitr::include_graphics("images/data_wrangler.png")  
@@ -61,32 +65,26 @@ knitr::include_graphics("images/data_wrangler.png")
 In this tutorial, you'll learn and practice examples using some functions in `dplyr` to work with data. Those are: 
 
 - `filter()`: keep rows that satisfy your conditions
-- `group_by()` + `summarize()`: get summary statistics
+- `group_by()` + `summarize()`: get summary statistics by group
 - `across()`: apply a function across columns
+- `case_when()`: like friendly if-else
 - `count()`: quickly find counts for different groups
 - `mutate()`: add a new column
-- `select()`: keep or exclude some columns
 - `rename()`: rename columns
+- `select()`: keep or exclude some columns
 - `relocate()`: move columns around
 
 
 
-## Meet the data
+## 2. Meet the data
 
 We'll practice some wrangling in `dplyr` using data for penguin sizes recorded by Dr. Kristen Gorman and others at several islands in the Palmer Archipelago, Antarctica. Data are originally published in: Gorman KB, Williams TD, Fraser WR (2014) PLoS ONE 9(3): e90081. doi:10.1371/journal.pone.0090081
 
-You do **not** need to import the data to work through this tutorial - the data are already here waiting behind the scenes.
-
-But if you *do* ever want to use the penguins data outside of this tutorial, they now exist in the [**palmerpenguins**](https://github.com/allisonhorst/palmerpenguins) package in *R*, which you can install from github using the following: 
-
-```
-library(remotes)
-remotes::install_github("allisonhorst/palmerpenguins")
-```
+You do **not** need to import the data to work through this tutorial - the data are already here waiting behind the scenes. If you *do* ever want to use the penguins data outside of this tutorial, you can learn more about them [here](https://allisonhorst.github.io/palmerpenguins/) and install them from CRAN using `install.packages("palmerpenguins")`.
 
 #### A bit about the penguins: 
 
-The 3 species of penguins in this data set are Adélie, Chinstrap and Gentoo. They are all awesome and adorable. 
+The 3 species of penguins in this data set are Adélie, chinstrap and gentoo. They are all awesome and adorable. 
 
 ```{r, echo=FALSE, out.width="100%", fig.align = "center"}
 knitr::include_graphics("images/lter_penguins.png")  
@@ -96,17 +94,12 @@ There are 7 variables included:
 
 - **species:** a factor denoting the penguin species (Adelie, Chinstrap, or Gentoo)
 - **island:** a factor denoting the island (in Palmer Archipelago, Antarctica) where observed
-- **culmen_length_mm:** a number denoting length of the dorsal ridge of penguin bill (millimeters)
-- **culmen_depth_mm:** a number denoting the depth of the penguin bill (millimeters)
+- **bill_length_mm:** a number denoting length of the dorsal ridge of penguin bill (millimeters)
+- **bill_depth_mm:** a number denoting the depth of the penguin bill (millimeters)
 - **flipper_length_mm:** an integer denoting penguin flipper length (millimeters)
 - **body_mass_g:** an integer denoting penguin body mass (grams)
-- **sex:** a factor denoting penguin sex (MALE, FEMALE)
-
-Which might make you ask, "What is a penguin culmen?" Here's an illustration of how those were measured by Dr. Gorman: 
-
-```{r, echo=FALSE, out.width="60%", fig.align = "center"}
-knitr::include_graphics("images/culmen_depth.png")  
-```
+- **sex:** a factor denoting penguin sex (male, female)
+- **year:** an integer denoting the study year (2007, 2008, or 2009)
 
 #### What do the data look like?  
 
@@ -118,9 +111,10 @@ penguins %>%
   kable() %>% 
   kable_styling(full_width = FALSE)
 ```
+
 OK, go forth and `filter()`! 
 
-## filter()
+## 3. dplyr::filter()
 
 Use `filter()` to create a subset of the data only containing rows that satisfy your conditions. 
 
@@ -148,19 +142,25 @@ In the code below, we **filter** the **penguins** data to only keep rows where t
 ```{r chinstrap, exercise = TRUE}
 dplyr::filter(penguins, species == "Chinstrap")
 ```
+#### Example 2: Make a subset with chinstraps and gentoos
+
+First, we need to be careful about the type of statement we're going to write. If we want to create a subset that contains chinstraps **and** gentoos, that means we want to keep rows where species matches "Chinstrap" **OR** "Gentoo". 
+
+We can do this a couple different ways:
+
+- Use the "or" operator, `|` (the vertical line), between conditions
+- Use the `%in%` operator, followed by a vector of values to look for a match in
+
+```{r chinstrap, exercise = TRUE}
+dplyr::filter(penguins, species == "Chinstrap")
+```
 
 
-## select()
+## 4. dplyr::select()
 
 Use `select()` to pick which columns to keep or exclude from your data. 
 
-
-
-## rename()
-
-Use `rename()` to change the name of one or more columns. 
-
-## relocate()
+## 5. dplyr::relocate()
 
 ```{r, echo=FALSE, out.width="100%", fig.align = "center"}
 knitr::include_graphics("images/dplyr_relocate.png")  
@@ -168,7 +168,11 @@ knitr::include_graphics("images/dplyr_relocate.png")
 
 Use `relocate()` to change the order of your columns. 
 
-## mutate()
+## 6. dplyr::rename()
+
+Use `rename()` to change the name of one or more columns. 
+
+## 7. dplyr::mutate()
 
 ```{r, echo=FALSE, out.width="80%", fig.align = "center"}
 knitr::include_graphics("images/dplyr_mutate.png")  
@@ -176,11 +180,11 @@ knitr::include_graphics("images/dplyr_mutate.png")
 
 Use `mutate()` to add a new column, while keeping the existing columns.
 
-## groupby() + summarize() 
+## 8. dplyr::group_by() + summarize() 
 
 Use the combination of `group_by()` and `summarize()` to find find summary statistics for different groups. 
 
-## across()
+## 9. dplyr::across()
 
 ```{r, echo=FALSE, out.width="100%", fig.align = "center"}
 knitr::include_graphics("images/dplyr_across.png")  
@@ -188,4 +192,12 @@ knitr::include_graphics("images/dplyr_across.png")
 
 Use `across()` to calculate 
 
-## count()
+## 10. dplyr::count()
+
+## 11. dplyr::case_when()
+
+The `case_when()` function is like a really friendly if-else statement. When used within `mutate()`, it allows you to add a new column that contains values determined by your 
+
+```{r, echo=FALSE, out.width="80%", fig.align = "center"}
+knitr::include_graphics("images/dplyr_case_when_sm.png")  
+```
