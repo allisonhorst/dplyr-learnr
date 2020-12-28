@@ -295,3 +295,17 @@ hr.examples {
 hr.activities {
   border: 3px solid orange;
 }
+
+/*------ FORK ON GITHUB BUTTON -------*/
+
+.button {
+        display: inline-block;
+        padding: 10px 20px;
+        padding-top: 10px;
+        text-align: center;
+        text-decoration: none;
+        color: white;
+        background-color: darkgray;
+        border-radius: 6px;
+        outline: none;
+      }

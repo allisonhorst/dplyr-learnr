@@ -18,14 +18,11 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## 1. Welcome!
 
-
 Hello! We're happy to see you here. In this lesson, you'll learn some basic functions to help you work with data using functions in the `dplyr` package, part of the `tidyverse` in *R*. 
-
-**Whoa whoa whoa.** Part of the **what** in **what**? 
 
 #### R is a programming language
 
-Don't let that intimidate you. *R* is a cool programming language - which means it's a way for you to give your computer directions to do specific things. That can be basic calculations, complex models, or even making graphs and tables! 
+*R* is a cool programming language - which means it's a way for you to give your computer directions to do specific things. That can be basic calculations, complex models, or even making graphs and tables! 
 
 ```{r, echo=FALSE, out.width="80%", fig.align = "center"}
 knitr::include_graphics("images/r_learners_sm.jpeg")  
@@ -75,7 +72,9 @@ In this tutorial, you'll learn and practice examples using some functions in `dp
 - `select()`: keep or exclude some columns
 - `relocate()`: move columns around
 
-
+<body>
+    <a class="button" href="https://github.com/allisonhorst/dplyr-learnr">Fork GitHub repo
+    </a>
 
 ## 2. Meet the data
 
