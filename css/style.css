@@ -49,7 +49,7 @@ h2 {
 }
 
 h3 {
-  color: mediumorchid;
+  color: black;
   font-family: 'Tajawal', sans-serif;
   font-weight: 500;
 }
@@ -58,6 +58,7 @@ h4 {
   color: darkmagenta;
   font-family: 'Tajawal', sans-serif;
   font-weight: 500;
+  padding-top: 20px;
 }
 
 h5 {
@@ -76,9 +77,9 @@ h5 {
 /*------- Rectangle panels --------*/
 .panel, pre {
     border-radius: 0;
-    background-color: lightseagreen;
+    background-color: #E5E4E2;
     border: 0;
-    font-size: 16px;
+    font-size: 11px;
     font: 'Tajawal', sans-serif
 }
 
@@ -91,7 +92,7 @@ h5 {
     border-right: 1px solid gainsboro;
     border-left: 1px solid gainsboro;
     font-family: 'Roboto Mono', monospace;
-    font-size: 13px;
+    font-size: 11px;
 }
 
 /*-------- Line # cells --------*/
@@ -179,27 +180,21 @@ a:hover, a:focus {
 }
 
 /*------- Solution / Hint buttons -------*/
-.tutorial-exercise-input .btn-tutorial-solution {
-    margin-left: 15px;
+tutorial-exercise-input .btn-tutorial-solution {
     background-color: mediumorchid;
     color: white;
     font-family: 'Tajawal', sans-serif;
-    font-weight: 500;
-    font-size: 12px;
-    border: 0;
 }
 
+
 /*------- Solution popover --------*/
-.popover-title {
+popover-title {
     margin: 0;
-    padding: 8px 14px;
-    font-size: 14px;
     background-color: mediumslateblue;
-    border-bottom: 1px solid #ebebeb;
-    border-radius: 5px 5px 0 0;
     color: white;
     font-family: 'Tajawal', sans-serif;
 }
+
 
 /*------- Buttons -------*/
 
@@ -209,32 +204,24 @@ a:hover, a:focus {
     background-image: none;
     border: none;
     font-family: 'Tajawal', sans-serif;
-    font-size: 12px;
     text-shadow: none;
 }
 
 /*------- Buttons when hovering -------*/
 .btn-default:hover, btn-success:hover, btn-info:hover, btn-primary:hover {
-  background-color: mediumslateblue;
+  background-color: mediumorchid;
   color: white;
   font-family: 'Tajawal', sans-serif;
 }
 
+
 /*-------- Code chunk buttons hover aesthetic -------*/
 
-.tutorial-exercise-input .btn-xs{
-    font-size: 12px;
-}
-
 .tutorial-exercise-input .btn-xs:hover {
-    margin-right: 0;
-    margin-top: -1px;
-    font-size: 12px;
-    margin-left: 12px;
-    padding-right: 8px;
     font-weight: normal;
-    background-color: mediumslateblue;
+    background-color: mediumorchid;
     color: white;
+    padding-top: 5px;
 }
 
 /*------- Button disabled -------*/
@@ -245,7 +232,9 @@ a:hover, a:focus {
     border: none;
     font-family: 'Tajawal', sans-serif;
     text-shadow: none;
+    padding-top: 5px;
 }
+
 
 /*------- Button default/primary -------*/
 .btn-default {
@@ -254,8 +243,8 @@ a:hover, a:focus {
     background-image: none;
     border: none;
     font-family: 'Tajawal', sans-serif;
-    font-size: 14px;
     text-shadow: none;
+    padding-top: 5px;
 }
 
 .btn-primary {
@@ -264,17 +253,45 @@ a:hover, a:focus {
     background-image: none;
     border: none;
     font-family: 'Tajawal', sans-serif;
-    font-size: 14px;
     text-shadow: none;
+    padding-top: 5px;
 }
 
 /*------- Update Next Section button -------*/
 .topicActions .btn-primary:hover {
     color: white;
+    background-color: mediumorchid;
+    background-image: none;
+    border: none;
+    font-family: 'Tajawal', sans-serif;
+    text-shadow: none;
+    padding-top: 5px;
+}
+
+.btn-primary, .btn-success, .btn-info, .btn-light, .btn-xs  {
+  color: white;
     background-color: mediumslateblue;
     background-image: none;
     border: none;
     font-family: 'Tajawal', sans-serif;
     text-shadow: none;
+    padding-top: 5px;
 }
 
+.topicActions .btn-primary:hover, .btn-success:hover, .btn-info:hover, .btn-light:hover, .btn-xs:hover {
+    color: white;
+    background-color: mediumorchid;
+    background-image: none;
+    border: none;
+    font-family: 'Tajawal', sans-serif;
+    text-shadow: none;
+    padding-top: 5px;
+}
+
+hr.examples {
+  border: 3px solid slateblue;
+}
+
+hr.activities {
+  border: 3px solid orange;
+}
