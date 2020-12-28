@@ -52,6 +52,7 @@ h3 {
   color: black;
   font-family: 'Tajawal', sans-serif;
   font-weight: 500;
+  text-transform: uppercase;
 }
 
 h4 {
@@ -59,6 +60,7 @@ h4 {
   font-family: 'Tajawal', sans-serif;
   font-weight: 500;
   padding-top: 20px;
+  text-transform: uppercase;
 }
 
 h5 {
@@ -77,9 +79,9 @@ h5 {
 /*------- Rectangle panels --------*/
 .panel, pre {
     border-radius: 0;
-    background-color: #E5E4E2;
+    background-color: #EBEBEB;
     border: 0;
-    font-size: 11px;
+    font-size: 13px;
     font: 'Tajawal', sans-serif
 }
 
@@ -92,7 +94,7 @@ h5 {
     border-right: 1px solid gainsboro;
     border-left: 1px solid gainsboro;
     font-family: 'Roboto Mono', monospace;
-    font-size: 11px;
+    font-size: 13px;
 }
 
 /*-------- Line # cells --------*/
@@ -122,7 +124,15 @@ code {
     font-family: 'Roboto Mono', monospace;
     color: teal;
     background-color: ghostwhite;
-    font-size: 12px;
+    font-size: 13px;
+}
+
+.panel, pre {
+    border-radius: 0;
+    background-color: #E5E4E2;
+    border: 0;
+    font-size: 13;
+    font: 'Tajawal', sans-serif;
 }
 
 /*------- Hyperlinks --------*/

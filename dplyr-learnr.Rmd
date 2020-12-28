@@ -63,14 +63,14 @@ knitr::include_graphics("images/data_wrangler.png")
 In this tutorial, you'll learn and practice examples using some functions in `dplyr` to work with data. Those are: 
 
 - `filter()`: keep rows that satisfy your conditions
+- `select()`: keep or exclude some columns
+- `rename()`: rename columns
+- `relocate()`: move columns around
+- `mutate()`: add a new column
 - `group_by()` + `summarize()`: get summary statistics by group
 - `across()`: apply a function across columns
-- `case_when()`: like friendly if-else
 - `count()`: quickly find counts for different groups
-- `mutate()`: add a new column
-- `rename()`: rename columns
-- `select()`: keep or exclude some columns
-- `relocate()`: move columns around
+- `case_when()`: like friendly if-else
 
 <body>
     <a class="button" href="https://github.com/allisonhorst/dplyr-learnr">Fork GitHub repo
@@ -128,55 +128,44 @@ In the image below, the data must satisfy two conditions for a row (observation)
 knitr::include_graphics("images/dplyr_filter_sm.png")  
 ```
 
-As a reminder, here's a sample from the **penguins** data (5 observations / 344 total).
+As a reminder for the following examples, here's a sample from the **penguins** data (5 observations / 344 total).
 
 ```{r}
 penguins[c(3,31,199,220,304),] %>% 
   kable() %>% 
   kable_styling(full_width = F)
 ```
-Now let's use `filter()` to help us keep or exclude rows based on our conditions. 
+Now let's learn some different ways we can use `filter()` to help us keep or exclude rows based on our conditions. 
 
 ### FILTER EXAMPLES
-
-### Keep rows that match string(s)
-
-The `dplyr::filter()` function lets us set conditions for different variables, so that only rows satisfying our conditions are kept. 
-
-Often, we will want to keep rows (observations) that satisfy a condition we set for a *string* (often a description). Some examples would be: 
-
-- Only keep penguins observed on Torgersen Island
-- Make a subset containing only chinstrap penguins
-- Create a subset containing female gentoo penguins 
-
-When setting conditions to match a character string, make sure to put the string in quotation marks, as in the examples below.
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 1
 
 Make a subset with only chinstrap penguins.
 
-In the code below, we **filter** the **penguins** data to only keep rows where the entry for **species** exactly matches "Chinstrap" (note that it is case sensitive). Press "Run" to see the outcome! 
+In the code below, we **filter** the **penguins** data to only keep rows where the entry for **species** exactly matches "Chinstrap" (case sensitive). Note that when our condition is based on a string, the string is in quotation marks (here, "Chinstrap").
 
-```{r filter_1, exercise = TRUE}
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
 dplyr::filter(penguins, species == "Chinstrap")
 ```
+
 #### `r fa("fas fa-robot", fill = "purple")` Example 2
 
-Make a subset with chinstraps and gentoos.
+From `penguins`, filter to only include chinstrap and gentoo penguins.
 
-First, we need to be careful about the type of statement we're going to write. If we want to create a subset that contains chinstraps **and** gentoos, that means we want to keep rows where species matches "Chinstrap" **OR** "Gentoo". 
-
-We can do this a couple different ways:
+First, we need to be careful about the type of statement we're going to write. If we want to create a subset that contains chinstraps **and** gentoos, that means we want to keep rows where species matches "Chinstrap" **OR** "Gentoo". We can do this a couple different ways:
 
 - Use the "or" operator, `|` (the vertical line), between conditions
 - Use the `%in%` operator, followed by a vector of values to look for a match in
 
-Both are shown below: 
-
-```{r filter_2, exercise = TRUE}
+```{r, echo = TRUE, message = FALSE, warning = FALSE, eval = FALSE}
 # First way: using the or | operator
 dplyr::filter(penguins, species == "Chinstrap" | species == "Gentoo")
+```
 
+Does the same thing as...
+
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
 # Second way: using the %in% operator
 dplyr::filter(penguins, species %in% c("Chinstrap", "Gentoo"))
 ```
@@ -193,13 +182,15 @@ In the examples above, we specified the dataset within the `filter()` function. 
 
 Collect kindling AND THEN open the flue AND THEN start fire using the pipe looks like: 
 
-    Collect kindling %>%
+```
+Collect kindling %>%
         open the flue %>%
         start fire
+```
   
 Let's say we want to use the pipe operator in the example above to filter for chinstraps. We start by telling R the data frame name, AND THEN what to do with it: data `%>%` thing, like this: 
 
-```{r filter_3, exercise = TRUE}
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
 penguins %>%
   dplyr::filter(species == "Chinstrap")
 ```
@@ -208,7 +199,7 @@ Moving forward in this tutorial, we'll use the pipe operator.
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 4
 
-Make a subset with Adélie penguins on Dream Island
+From `penguins`, make a subset with Adélie penguins on Dream Island.
 
 Think carefully above the conditions. In this case, we only want to keep observations (rows) where the species is "Adelie" **AND** the island is "Dream" - a row should only be retained if both of those conditions are met. There are a number of ways you can write an **and** statement within `filter()`, including:
 
@@ -217,7 +208,7 @@ Think carefully above the conditions. In this case, we only want to keep observa
 
 We can create a subset starting from penguins that only contains observations for Adélie penguins on Dream Island as follows:
 
-```{r filter_4, exercise = TRUE}
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
 penguins %>% 
   filter(species == "Adelie", island == "Dream")
 ```
@@ -230,29 +221,27 @@ Unlike when setting conditions for strings, values within `filter()` don't need 
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 5
 
-Keep penguins with a flipper length greater than 200 mm
+From `penguins`, keep penguins with a flipper length greater than 200 mm.
 
-```{r filter_5, exercise = TRUE}
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
 penguins %>% 
   filter(flipper_length_mm > 200)
 ```
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 6
 
-Keep penguins with a body mass less than or equal to 2900 g
+From `penguins`, keep observations where body mass less than or equal to 2900 g.
 
-```{r filter_6, exercise = TRUE}
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
 penguins %>% 
   filter(body_mass_g <= 2900)
 ```
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 7
 
-Keep Adélie penguins with a bill length greater than 40 mm
+From `penguins`, keep observations for Adélie penguins with a bill length greater than 40 mm.
 
-We can use conditions for strings and values in combination, too. In this example, the species should match "Adelie" **and** the bill length (`bill_length_mm`) must be greater than 40 mm.
-
-```{r filter_7, exercise = TRUE}
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
 penguins %>% 
   filter(species == "Adelie", bill_length_mm > 40)
 ```
@@ -267,15 +256,15 @@ Use `!=` to indicate "does not match" within the `filter()` function.
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 8 
 
-Exclude chinstraps
+Exclude observations for chinstraps from the `penguins` data. In the code below, the `!=` operator is used within `filter()` to keep observations where the species variable **does not match** "Chinstrap". 
 
-In the code below, the `!=` operator is used within `filter()` to keep observations where the species variable **does not match** "Chinstrap". 
-
-```{r filter_8, exercise = TRUE}
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
 penguins %>% 
   filter(species != "Chinstrap")
 ```
 
+<br>
+<br>
 <hr class="examples">
 
 ### FILTER PRACTICE ACTIVITIES
@@ -402,15 +391,13 @@ penguins[c(3,31,199,220,304),] %>%
 
 ### SELECT EXAMPLES
 
-### Selecting individual columns
-
-Within select, list the variables that you want to keep in your new subset, separated by commas. Note: you can also use `select()` to reorder columns - the order they are listed within `select()` is the order they'll appear in the new subset.
+Within `select()`, list the variables that you want to keep in your new subset, separated by commas. Select a range of sequential variables using a colon `:` between inclusive endpoint variables. For example, to select from columns `giraffe` to `narwhal` the entire range is referenced with `giraffe:narwhal`. Note: you can also use `select()` to reorder columns - the order they are listed within `select()` is the order they'll appear in the new subset.
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 1
 
 Keep columns `year`, `island`, and `species` from the `penguins` data.
 
-```{r select_1, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   select(year, island, species)
 ```
@@ -419,31 +406,25 @@ penguins %>%
 
 Keep columns `species` and `body_mass_g` from the `penguins` data.
 
-```{r select_2, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   select(species, body_mass_g)
 ```
 
-### Selecting a range of columns
-
-Select a range of sequential variables using a colon `:` between inclusive endpoint variables. For example, to select from columns `giraffe` to `narwhal` the entire range is referenced with `giraffe:narwhal`.
-
 #### `r fa("fas fa-robot", fill = "purple")` Example 3
 
-From the `penguins` data, keep all columns from `species` to `body_mass_g`.
+From the `penguins` data, keep all columns from `species` to `body_mass_g`. 
 
-```{r select_3, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   select(species:body_mass_g)
 ```
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 4
 
-Keep columns from `species` to `bill_depth_mm` *and* `year` from the penguins data.
+Keep columns from `species` to `bill_depth_mm` *and* `year` from the penguins data. Note that additional (non-sequential) variables are added after a comma. 
 
-Note that additional (non-sequential) variables are added after a comma. 
-
-```{r select_4, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   select(species:bill_depth_mm, year)
 ```
@@ -460,7 +441,7 @@ To exclude several non-sequential columns, use `!c(giraffe, wolf, shark)`.
 
 From `penguins`, keep all variables *except* `island`
 
-```{r select_5, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   select(-island)
 ```
@@ -469,7 +450,7 @@ penguins %>%
 
 From `penguins`, keep all variables *except* those from `island` to `bill_depth_mm`
 
-```{r select_6, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   select(!(island:bill_depth_mm))
 ```
@@ -478,7 +459,7 @@ penguins %>%
 
 From `penguins`, keep all variables *except* `species`, `flipper_length_mm`, and `year`
 
-```{r select_7, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   select(!c(species, flipper_length_mm, year))
 ```
@@ -491,47 +472,47 @@ Here, we'll just explore a few: `starts_with()`, `ends_with()`, and `contains()`
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 8
 
-Keep columns that start with "bill"
+Keep columns with names that start with "bill".
 
-```{r select_8, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   select(starts_with("bill"))
 ```
 
 #### `r fa("fas fa-robot", fill = "purple")`Example 9
 
-Keep columns that end with "mm"
+Keep columns with names that end in "mm".
 
-```{r, select_9, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   select(ends_with("mm"))
 ```
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 10
 
-Keep columns that contain "length"
+Keep columns with names that contain "length".
 
-```{r select_10, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   select(contains("length"))
 ```
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 11
 
-Keep columns that contain "length" OR start with "bill"
+Keep columns that contain "length" OR start with "bill".
 
-```{r select_11, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   select(contains("length") | starts_with("bill"))
 ```
 
-### Examples of select in sequence
+### Examples in sequence
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 12
 
-Make a subset from penguins that only contains observations for gentoo penguins, and then only keep columns for island, sex and body mass
+Make a subset from penguins that only contains observations for gentoo penguins, and then only keep columns for island, sex and body mass.
 
-```{r select_12, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   filter(species == "Gentoo") %>% 
   select(island, sex, body_mass_g)
@@ -541,12 +522,14 @@ penguins %>%
 
 Make a subset from penguins that only contains observations for male penguins with flippers longer than 200 mm, and then only keep columns that end with "mm".
 
-```{r select_13, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   filter(sex == "male", flipper_length_mm > 200) %>% 
   select(ends_with("mm"))
 ```
 
+<br>
+<br>
 <hr class="examples">
 
 ### SELECT PRACTICE ACTIVITIES
@@ -703,7 +686,7 @@ penguins[c(3,31,199,220,304),] %>%
 
 Move the `year` column to the front of the `penguins` data.
 
-```{r relocate_1, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   relocate(year)
 ```
@@ -712,7 +695,7 @@ penguins %>%
 
 Starting with `penguins`, move the `flipper_length_mm` column to after the `island` column.
 
-```{r relocate_2, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   relocate(flipper_length_mm, .after = island)
 ```
@@ -721,7 +704,7 @@ penguins %>%
 
 Starting with `penguins`, move the `bill_lenth_mm` column to before `year`.
 
-```{r relocate_3, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   relocate(bill_length_mm, .before = year)
 ```
@@ -730,11 +713,13 @@ penguins %>%
 
 Starting with `penguins`, move any numeric variables to after any factor variables.
 
-```{r relocate_4, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   relocate(where(is.numeric), .after = where(is.factor))
 ```
 
+<br>
+<br>
 <hr class="examples">
 
 ### RELOCATE PRACTICE ACTIVITIES
@@ -805,7 +790,7 @@ penguins[c(3,31,199,220,304),] %>%
 
 Rename the `island` column to `palmer_island`.
 
-```{r rename_1, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   rename(palmer_island = island)
 ```
@@ -814,7 +799,7 @@ penguins %>%
 
 Rename the `year` column to `study_yr`, and `body_mass_g` to `mass`.
 
-```{r rename_2, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   rename(study_yr = year, mass = body_mass_g)
 ```
@@ -825,7 +810,7 @@ Convert all column names in `penguins` to upper case with `toupper`.
 
 Note: This is probably not a thing you'd actually want to do in the wild. 
 
-```{r rename_3, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   rename_with(toupper)
 ```
@@ -834,11 +819,13 @@ penguins %>%
 
 Convert all column names in `penguins` that end with "mm" to upper case (`toupper`).
 
-```{r rename_4, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   rename_with(toupper, ends_with("mm"))
 ```
 
+<br>
+<br>
 <hr class="examples">
 
 ### RENAME PRACTICE ACTIVITIES
@@ -918,7 +905,7 @@ penguins[c(3,31,199,220,304),] %>%
 
 Add a new column to penguins with body mass converted to kilograms.
 
-```{r mutate_1, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   mutate(body_mass_kg = body_mass_g / 1000)
 ```
@@ -927,7 +914,7 @@ penguins %>%
 
 Add a new column to penguins with the ratio of bill length to bill depth.
 
-```{r mutate_2, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   mutate(bill_ratio = bill_length_mm / bill_depth_mm)
 ```
@@ -936,7 +923,7 @@ penguins %>%
 
 Add a new column with a sequence of values from 1 to the length of the data frame.
 
-```{r mutate_3, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   mutate(record_number = seq(1:n()))
 ```
@@ -947,7 +934,7 @@ Convert the `island` variable to a character using `mutate`.
 
 Note / danger: this is a different (and a bit dangerous) use of `mutate()`. If you give the new column the same name as an existing column, the existing column will be **replaced**. As a general rule, if in doubt ADD A COLUMN (little cost) instead of overwriting a column.
 
-```{r mutate_4, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   mutate(island = as.character(island))
 ```
@@ -959,11 +946,13 @@ Use `fct_relevel()` within `mutate()` to reorder the factor levels of `island` t
 Note: See `fct_relevel()` & `fct_reorder()` in the `forcats` package to change the order of factor levels. 
 
 
-```{r mutate_5, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   mutate(island = fct_relevel(island, "Torgersen", "Biscoe", "Dream"))
 ```
 
+<br>
+<br>
 <hr class="examples">
 
 ### MUTATE PRACTICE ACTIVITIES
@@ -1041,11 +1030,9 @@ penguins[c(3,31,199,220,304),] %>%
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 1
 
-Use `group_by()` and `summarize()` to prepare a summary table containing the mean of penguin body mass, grouped by penguin species. 
+Use `group_by()` and `summarize()` to prepare a summary table containing the mean of penguin body mass, grouped by penguin species. Note that the `na.rm = TRUE` argument is added to exclude missing values. 
 
-Note that the `na.rm = TRUE` argument is added to exclude missing values. 
-
-```{r group_summarize_1, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   group_by(species) %>% 
   summarize(mass_mean = mean(body_mass_g, na.rm = TRUE))
@@ -1057,7 +1044,7 @@ Use `group_by()` and `summarize()` to prepare a summary table containing the mea
 
 Notice that there are now *two* columns created by `summarize()`, mass_mean and mass_sd.
 
-```{r group_summarize_2, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   group_by(species) %>% 
   summarize(mass_mean = mean(body_mass_g, na.rm = TRUE),
@@ -1070,7 +1057,7 @@ Use `group_by()` and `summarize()` to prepare a summary table containing the mea
 
 Note that the data are now grouped by `species` and `sex` (within `group_by()`), and two columns are created: `bill_length_mean` and `bill_length_sd`, which will contain the mean and standard deviation of bill length within each group. 
 
-```{r group_summarize_3, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   group_by(species, sex) %>% 
   summarize(bill_length_mean = mean(bill_length_mm, na.rm = TRUE),
@@ -1083,7 +1070,7 @@ Use `group_by()` and `summarize()` to prepare a summary table containing the max
 
 Here, we'll first use `filter()` to only keep rows for male Adélie penguins, then use `group_by()` and `summarize()` to find the minimum and maximum flipper length **by island**, & put them in a nice table. 
 
-```{r group_summarize_4, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   filter(species == "Adelie", sex == "male") %>% 
   group_by(island) %>% 
@@ -1091,6 +1078,8 @@ penguins %>%
             flip_min_length = min(flipper_length_mm))
 ```
 
+<br>
+<br>
 <hr class="examples">
 
 ### GROUP_BY %>% SUMMARIZE PRACTICE ACTIVITIES
@@ -1200,7 +1189,7 @@ penguins[c(3,31,199,220,304),] %>%
 
 #### Approach 1: Using `group_by()` %>% `summarize()`
 
-```{r, echo = TRUE, message = FALSE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE, eval = FALSE}
 penguins %>% 
   group_by(species) %>% 
   summarize(bill_length_mean = mean(bill_length_mm, na.rm = TRUE),
@@ -1210,7 +1199,7 @@ penguins %>%
 
 #### Approach 2: Using `across()` within `summarize()`
 
-```{r, echo = TRUE, message = FALSE, warning = FALSE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   group_by(species) %>% 
   summarize(across(ends_with("mm"), mean, na.rm = TRUE))
@@ -1220,11 +1209,13 @@ The output is the same - but the second way (using `across()`) is much more effi
 
 The `across()` function also happily accepts most helper functions introduced for `select()`, including: `starts_with()`, `ends_with()`, `contains()`, as well as to specify classes (e.g. `is.numeric`, `is.character`, etc.). Follow along with the examples & exercises below to learn more! 
 
+### ACROSS EXAMPLES
+
 #### `r fa("fas fa-robot", fill = "purple")` Example 1
 
 Starting with `penguins`, use `across()` within `group_by()` and `summarize()` to make a summary table containing the maximum value within any column starting with "bill", grouped by `year`.
 
-```{r across_1, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   group_by(year) %>% 
   summarize(across(starts_with("bill"), max, na.rm = TRUE))
@@ -1236,7 +1227,7 @@ Since what is presented in the table is the *maximum* value for bill length and 
 
 Repeat the example above, but add an argument that will automatically update the column names containing the maximum bill length and depth to start with "max_" followed by the original column name.
 
-```{r across_2, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   group_by(year) %>%
   summarise(across(starts_with("bill"), max, na.rm = TRUE, .names = "max_{.col}"))
@@ -1252,7 +1243,7 @@ There's quite a bit happening here, so a little breakdown:
 - Within `list()` is where the functions to be applied across columns are given, and where their "names" of "avg" and "stdev" are set
 - We use `.names = ` to define the final column names in the summary table. Here, the name should start with the function "name" specified above ("avg" or "stdev"), then an underscore, then the original column name (that's what `"{.fn}_{.col}"` will do)
 
-```{r across_3, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   group_by(species) %>% 
   summarize(across(contains("length"), 
@@ -1261,6 +1252,8 @@ penguins %>%
                    .names = "{.fn}_{.col}"))
 ```
 
+<br>
+<br>
 <hr class="examples">
 
 ### ACROSS PRACTICE ACTIVITIES
@@ -1337,7 +1330,7 @@ Pretty cool, right? The `dplyr::count()` function does all the work of `group_by
 
 Starting with the `penguins` dataset, find the counts of penguins by species and year.
 
-```{r count_1, exercise = TRUE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   count(species, year)
 ```
@@ -1346,15 +1339,16 @@ penguins %>%
 
 Starting from `penguins`, find the number of observations by island.
 
-```{r}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
   count(island)
 ```
 
+<br>
+<br>
 <hr class="examples">
 
 ### COUNT PRACTICE ACTIVITIES
-
 
 ## 11. dplyr::case_when()
 
