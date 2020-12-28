@@ -1262,9 +1262,9 @@ penguins %>%
                    .names = "{.fn}_{.col}"))
 ```
 
-<hr>
+<hr class="examples">
 
-ACROSS PRACTICE ACTIVITIES
+### ACROSS PRACTICE ACTIVITIES
 
 #### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 1
 
@@ -1275,6 +1275,16 @@ Starting with `penguins`, group data by island then use `across()` to find the m
 ```
 
 ```{r across_q1-hint}
+penguins %>% 
+  group_by(______) %>% 
+  summarize(across(contains("______"), 
+                   list(median = ______),
+                   na.rm = TRUE,
+                   .names = "_______")
+            )
+```
+
+```{r across_q1-solution}
 penguins %>% 
   group_by(species) %>% 
   summarize(across(contains("mm"), 
@@ -1287,6 +1297,65 @@ penguins %>%
 
 
 ## 10. dplyr::count()
+
+The `dplyr::count()` function wraps a bunch of things into one beautiful friendly line of code to help you find counts of observations by group. To demonstrate what it does, let's find the counts of penguins in the `penguins` dataset by species in two different ways: 
+
+1. Using `group_by()` %>% `summarize()` with `n()` to count observations
+2. Using `count()` to do the exact same thing
+
+As a reminder, here's a sample from the **penguins** data (5 observations / 344 total).
+
+```{r}
+penguins[c(3,31,199,220,304),] %>% 
+  kable() %>% 
+  kable_styling(full_width = F)
+```
+
+#### Approach 1: `group_by()` %>% `summarize()` w/ `n()`
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
+penguins %>% 
+  group_by(species) %>% 
+  summarize(
+    n = n()
+  )
+```
+
+#### Approach 2: `count()`
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
+penguins %>% 
+  count(species)
+```
+
+Pretty cool, right? The `dplyr::count()` function does all the work of `group_by()`, `summarize()` **and** `n()` for you! 
+
+**Note:** The default assumes that each observation is in its own row (case format). If you have a column containing *counts* (i.e. more that one observation are represented in a single row) use the `wt = ` argument to specify the column containing counts, then the `count()` function will sum them instead to find totals. 
+
+### COUNT EXAMPLES
+
+#### `r fa("fas fa-robot", fill = "purple")` Example 1
+
+Starting with the `penguins` dataset, find the counts of penguins by species and year.
+
+```{r count_1, exercise = TRUE}
+penguins %>% 
+  count(species, year)
+```
+
+#### `r fa("fas fa-robot", fill = "purple")` Example 2
+
+Starting from `penguins`, find the number of observations by island.
+
+```{r}
+penguins %>% 
+  count(island)
+```
+
+<hr class="examples">
+
+### COUNT PRACTICE ACTIVITIES
+
 
 ## 11. dplyr::case_when()
 
