@@ -1,5 +1,5 @@
 ---
-title: "Penguin wrangling: some basic data wrangling in R with dplyr functions"
+title: "Wrangling penguins: some basic data wrangling in R with dplyr"
 author: "Allison Horst"
 output: 
   learnr::tutorial:
@@ -19,32 +19,6 @@ knitr::opts_chunk$set(echo = FALSE)
 ## 1. Welcome!
 
 Hello! We're happy to see you here. In this lesson, you'll learn some basic functions to help you work with data using functions in the `dplyr` package, part of the `tidyverse` in *R*. 
-
-#### R is a programming language
-
-*R* is a cool programming language - which means it's a way for you to give your computer directions to do specific things. That can be basic calculations, complex models, or even making graphs and tables! 
-
-```{r, echo=FALSE, out.width="80%", fig.align = "center"}
-knitr::include_graphics("images/r_learners_sm.jpeg")  
-```
-
-For example, you can use *R* like a regular calculator. Press 'Run' in the area below to run the existing code.
-
-```{r calculator, exercise = TRUE}
-2 + 3
-```
-
-Notice that when you press 'Run', the **output** of the code is returned below it! So by pressing 'Run', you've run your first *R* code! 
-
-Go ahead and try typing in some basic calculations in the area below, and notice that when you update the numbers and press 'Run', the output below it is updated. 
-
-```{r practice_calc, exercise = TRUE}
-
-```
-
-Cool! We see that when we type **code** into those areas (that I'll call 'code chunks' moving forward) and press 'Run', the output is returned just below it. 
-
-Now that you know how to run some *R* code in this tutorial...
 
 #### What is the `tidyverse`?
 
@@ -72,13 +46,33 @@ In this tutorial, you'll learn and practice examples using some functions in `dp
 - `count()`: quickly find counts for different groups
 - `case_when()`: like friendly if-else
 
+In each section, there will be examples and practice activities. You will complete practice activities in code chunks, like the one below. Once you enter your activity code, press 'Run' to see the output. If you get stuck, press the 'Hint' or 'Solution' button.
+
+```{r calculator, exercise = TRUE}
+2 + 3
+```
+
+When you press 'Run', the **output** of the code is returned below it.
+
+Go ahead and try typing in some basic calculations in the area below, and notice that when you update the numbers and press 'Run', the output below it is updated. 
+
+```{r practice_calc, exercise = TRUE}
+
+```
+
+Move on to meet the penguins in Section 2!
+
+```{r, echo=FALSE, out.width="80%", fig.align = "center"}
+knitr::include_graphics("images/r_learners_sm.jpeg")  
+```
+
 <body>
     <a class="button" href="https://github.com/allisonhorst/dplyr-learnr">Fork GitHub repo
     </a>
 
 ## 2. Meet the data
 
-We'll practice some wrangling in `dplyr` using data for penguin sizes recorded by Dr. Kristen Gorman and colleagues with the Palmer Station Long Term Ecological Research site (Palmer LTER) at several islands in the Palmer Archipelago, Antarctica. Data are originally published in: Gorman KB, Williams TD, Fraser WR (2014) PLoS ONE 9(3): e90081. doi:10.1371/journal.pone.0090081
+We'll practice some wrangling in `dplyr` using data for penguin sizes recorded by Dr. Kristen Gorman and colleagues with the [Palmer Station Long Term Ecological Research site (Palmer LTER)](https://pal.lternet.edu/) at several islands in the Palmer Archipelago, Antarctica. Data are originally published in: Gorman KB, Williams TD, Fraser WR (2014) PLoS ONE 9(3): e90081. doi:10.1371/journal.pone.0090081, and made available through the Environmental Data Initiative (see data citation details [here](https://allisonhorst.github.io/palmerpenguins/index.html)).
 
 You do **not** need to import the data to work through this tutorial - the data are already here waiting behind the scenes. If you *do* ever want to use the `penguins` dataset outside of this tutorial, you can install the `palmerpenguins` package from CRAN using `install.packages("palmerpenguins")` and learn more about the package [here](https://allisonhorst.github.io/palmerpenguins/).
 
@@ -879,13 +873,19 @@ penguins %>%
 
 Use `mutate()` to add a new column, while keeping the existing columns. The general structure is:
 
-  `df %>% mutate(new_column_name = what_it_contains)`
+```{r, echo = TRUE, eval = FALSE}
+df %>% 
+  mutate(new_column_name = what_it_contains)
+```
   
-For example, if I had a data frame `df` with columns `A` and `B`, I can add a new column `C` that is the sum of `A` and `B` as follows:
+For example, if I had a data frame `df` with columns `A` and `B`, I can add a new column `C` that is the sum of `A` and `B` as follows (note: you can also use `sum(A,B)` here instead of `A + B`):
 
-  `df %>% mutate(C = A + B)` (or use `sum(A,B)`)
+```{r, echo = TRUE, eval = FALSE}
+df %>% 
+  mutate(C = A + B)
+```
 
-...as demonstrated by the helper monsters below:
+...as demonstrated by mutant monsters below:
 
 ```{r, echo=FALSE, out.width="80%", fig.align = "center"}
 knitr::include_graphics("images/dplyr_mutate.png")  
@@ -903,7 +903,7 @@ penguins[c(3,31,199,220,304),] %>%
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 1
 
-Add a new column to penguins with body mass converted to kilograms.
+Add a new column to penguins with body mass (currently in grams) converted to kilograms.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>% 
@@ -1350,10 +1350,92 @@ penguins %>%
 
 ### COUNT PRACTICE ACTIVITIES
 
+#### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 1
+
+Starting with `penguins`, find counts of observation by species, island and year.
+
+```{r count_q1, exercise = TRUE}
+
+```
+
+```{r count_q1-solution}
+penguins %>% 
+  count(species, island, year)
+```
+
+#### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 2
+
+Starting with `penguins`, filter to only keep Adélie and gentoo penguins, then find counts by species and sex. 
+
+```{r count_q2, exercise = TRUE}
+
+```
+
+```{r count_q2-hint}
+penguins %>% 
+  filter(species %in% c("_____","_____")) %>% 
+  count(_____, _____)
+```
+
+```{r count_q2-solution}
+penguins %>% 
+  filter(species %in% c("Adelie","Gentoo")) %>% 
+  count(species, sex)
+```
+
 ## 11. dplyr::case_when()
 
-The `case_when()` function is like a really friendly if-else statement. When used within `mutate()`, it allows you to add a new column that contains values determined by your ...
+The `case_when()` function is like a really friendly if-else statement. When used within `mutate()`, it allows you to add a new column containing values dependent on your condition(s). 
 
 ```{r, echo=FALSE, out.width="80%", fig.align = "center"}
 knitr::include_graphics("images/dplyr_case_when_sm.png")  
 ```
+
+### CASE_WHEN EXAMPLES
+
+#### `r fa("fas fa-robot", fill = "purple")` Example 1
+
+To `penguins`, add a new column `size_bin` that contains:
+
+- "large" if body mass is greater than 4500 g
+- "medium" if body mass is greater than 3000 g, and less than or equal to 4500 g
+- "small" if body mass is less than or equal to 3000 g
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
+penguins %>% 
+  mutate(size_bin = case_when(
+      body_mass_g > 4500 ~ "large",
+      body_mass_g > 3000 & body_mass_g <= 4500 ~ "medium",
+      body_mass_g <= 3000 ~ "small"
+    )
+  )
+```
+
+#### `r fa("fas fa-robot", fill = "purple")` Example 2
+
+Starting with `penguins`: 
+
+- Limit the columns to `species`, `year`, and `flipper_length_mm`
+- Rename the `year` column to `study_year`
+- Only keep observations for Adélie penguins
+- Add a new column called `flipper_rank` that contains:
+
+  - 1 if `flipper_length_mm` is < 200 mm
+  - 2 if `flipper_length_mm` is >= 200 mm
+  - 0 if `flipper_length_mm` is anything else (e.g. `NA`)
+      
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
+penguins %>% 
+  select(species, year, flipper_length_mm) %>% 
+  rename(study_year = year) %>% 
+  filter(species == "Adelie") %>% 
+  mutate(flipper_rank = case_when(
+    flipper_length_mm < 200 ~ 1,
+    flipper_length_mm >= 200 ~ 2,
+    TRUE ~ 0 # 0 for anything else
+  ))
+```
+
+<br>
+<br>
+<hr class="examples">
