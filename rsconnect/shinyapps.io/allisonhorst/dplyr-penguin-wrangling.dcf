@@ -1,0 +1,12 @@
+name: dplyr-penguin-wrangling
+title:
+username:
+account: allisonhorst
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3433650
+bundleId: 4037758
+url: https://allisonhorst.shinyapps.io/dplyr-penguin-wrangling/
+when: 1609223791.37445
+asMultiple: FALSE
+asStatic: FALSE
