@@ -138,7 +138,7 @@ code {
 /*------- Hyperlinks --------*/
 a {
     font-family: 'Tajawal', sans-serif;
-    color: lightseagreen;
+    color: teal;
     text-decoration: none;
 }
 
@@ -194,6 +194,7 @@ tutorial-exercise-input .btn-tutorial-solution {
     background-color: mediumorchid;
     color: white;
     font-family: 'Tajawal', sans-serif;
+    padding-top: 5px;
 }
 
 
@@ -208,25 +209,6 @@ popover-title {
 
 /*------- Buttons -------*/
 
-.btn-primary, .btn-success, .btn-info, .btn-xs{
-    color: white;
-    background-color: mediumorchid;
-    background-image: none;
-    border: none;
-    font-family: 'Tajawal', sans-serif;
-    text-shadow: none;
-}
-
-/*------- Buttons when hovering -------*/
-.btn-default:hover, btn-success:hover, btn-info:hover, btn-primary:hover {
-  background-color: mediumorchid;
-  color: white;
-  font-family: 'Tajawal', sans-serif;
-}
-
-
-/*-------- Code chunk buttons hover aesthetic -------*/
-
 .tutorial-exercise-input .btn-xs:hover {
     font-weight: normal;
     background-color: mediumorchid;
@@ -234,43 +216,10 @@ popover-title {
     padding-top: 5px;
 }
 
-/*------- Button disabled -------*/
-.btn-primary.disabled {
-    color: #c8c8c8;
-    background-color: #5a5a5a;
-    background-image: none;
-    border: none;
-    font-family: 'Tajawal', sans-serif;
-    text-shadow: none;
-    padding-top: 5px;
-}
-
-
 /*------- Button default/primary -------*/
 .btn-default {
     color: white;
-    background-color: mediumorchid;
-    background-image: none;
-    border: none;
-    font-family: 'Tajawal', sans-serif;
-    text-shadow: none;
-    padding-top: 5px;
-}
-
-.btn-primary {
-    color: white;
-    background-color: mediumorchid;
-    background-image: none;
-    border: none;
-    font-family: 'Tajawal', sans-serif;
-    text-shadow: none;
-    padding-top: 5px;
-}
-
-/*------- Update Next Section button -------*/
-.topicActions .btn-primary:hover {
-    color: white;
-    background-color: mediumorchid;
+    background-color: mediumslateblue;
     background-image: none;
     border: none;
     font-family: 'Tajawal', sans-serif;
@@ -296,6 +245,13 @@ popover-title {
     font-family: 'Tajawal', sans-serif;
     text-shadow: none;
     padding-top: 5px;
+}
+
+.btn-default:hover, btn-success:hover, btn-info:hover, btn-primary:hover {
+  background-color: mediumorchid;
+  color: white;
+  font-family: 'Tajawal', sans-serif;
+  padding-top: 5px;
 }
 
 hr.examples {

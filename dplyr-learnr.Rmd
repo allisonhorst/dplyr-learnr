@@ -28,7 +28,7 @@ The [`tidyverse`](https://www.tidyverse.org/) is a collection of packages that c
 
 `dplyr` is one *package* in the tidyverse. It is the home to many functions that make it easier for us to work with data. Those include things like selecting specific columns, deciding which rows to keep based on whether or not they match our conditions, and finding summary statistics for different variables and groups. Sometimes we call these steps part of "data wrangling." 
 
-```{r, echo=FALSE, out.width="100%", fig.align = "center"}
+```{r, echo=FALSE, out.width="100%", fig.align = "center", fig.cap = "Illustration from Hadley Wickham's 2019 talk, The Joy of Functional Programming"}
 knitr::include_graphics("images/data_wrangler.png")  
 ```
 
@@ -46,13 +46,27 @@ In this tutorial, you'll learn and practice examples using some functions in `dp
 - `count()`: quickly find counts for different groups
 - `case_when()`: like friendly if-else
 
-In each section, there will be examples and practice activities. You will complete practice activities in code chunks, like the one below. Once you enter your activity code, press 'Run' to see the output. If you get stuck, press the 'Hint' or 'Solution' button.
+#### What's not in this tutorial? 
+
+A whole lot. Visit https://dplyr.tidyverse.org/ and [R for Data Science](https://r4ds.had.co.nz/) for more information and examples. 
+
+#### Code chunks for activities
+
+In each section of this tutorial, there will be examples and practice activities. You will complete practice activities in code chunks, like the one below. Once you enter your activity code, press 'Run' to see the output. If you get stuck, press the 'Hint' or 'Solution' button.
 
 ```{r calculator, exercise = TRUE}
-2 + 3
+0.2 + 0.3
 ```
 
-When you press 'Run', the **output** of the code is returned below it.
+```{r calculator-hint}
+0.2 + 0.4 # Should be plus 0.4
+```
+
+```{r calculator-solution}
+(0.2 + 0.4)*100 # Multiply by 100 to make a percentage
+```
+
+When you press 'Run', the **output** of the code is returned below the code chunk.
 
 Go ahead and try typing in some basic calculations in the area below, and notice that when you update the numbers and press 'Run', the output below it is updated. 
 
@@ -113,6 +127,8 @@ penguins %>%
 OK, go forth and `filter()`! 
 
 ## 3. dplyr::filter()
+
+[CLICK HERE](https://dplyr.tidyverse.org/reference/filter.html) for `filter()` documentation from tidyverse.org. 
 
 Use `filter()` to create a subset of the data only containing rows that satisfy your conditions. 
 
@@ -370,6 +386,8 @@ penguins %>%
 
 
 ## 4. dplyr::select()
+
+[CLICK HERE](https://dplyr.tidyverse.org/reference/select.html) for `select()` documentation from tidyverse.org.
 
 The main job of `dplyr::select()` is to help you pick which **columns** (if your data is in tidy format, those are variables) to keep or exclude.
 
@@ -655,6 +673,8 @@ penguins %>%
 
 ## 5. dplyr::relocate()
 
+[CLICK HERE](https://dplyr.tidyverse.org/reference/relocate.html) for `relocate()` documentation from tidyverse.org. 
+
 ```{r, echo=FALSE, out.width="100%", fig.align = "center"}
 knitr::include_graphics("images/dplyr_relocate.png")  
 ```
@@ -746,7 +766,7 @@ penguins %>%
 
 #### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 3
 
-Move any factor variables (hint: `is.factor`) to after an integer variable (`is.integer`).
+Move any factor variables (hint: `is.factor`) to after any integer variables (`is.integer`).
 
 ```{r relocate_q3, exercise = TRUE}
 
@@ -759,6 +779,8 @@ penguins %>%
 
 
 ## 6. dplyr::rename()
+
+[CLICK HERE](https://dplyr.tidyverse.org/reference/rename.html) for `rename()` documentation from tidyverse.org.
 
 Use `rename()` to change the name of one or more columns. Generally, it'll look something like this: 
 
@@ -870,6 +892,8 @@ penguins %>%
 ```
 
 ## 7. dplyr::mutate()
+
+[CLICK HERE](https://dplyr.tidyverse.org/reference/mutate.html) for `mutate()` documentation from tidyverse.org.
 
 Use `mutate()` to add a new column, while keeping the existing columns. The general structure is:
 
@@ -1009,10 +1033,12 @@ penguins %>%
 
 ## 8. dplyr::group_by() %>% summarize() 
 
+[CLICK HERE](https://dplyr.tidyverse.org/reference/group_by.html) for `group_by()` documentation, and [here](https://dplyr.tidyverse.org/reference/summarise.html)
+ for `summarize()` documentation, from tidyverse.org.
+
 Use the combination of `group_by()` and `summarize()` to find find summary statistics for different groups, and put them in a nice table. 
 
 From [dplyr.tidyverse.org](https://dplyr.tidyverse.org/): 
-
 - `group_by()` "takes an existing tbl and converts it into a grouped tbl where operations are performed 'by group'"
 - `summarize()` "creates a new data frame. It will have one (or more) rows for each combination of grouping variables; if there are no grouping variables, the output will have a single row summarising all observations in the input. It will contain one column for each grouping variable and one column for each of the summary statistics that you have specified"
 
@@ -1167,12 +1193,12 @@ penguins %>%
 
 ## 9. dplyr::across()
 
-See more information on `dplyr::across()` [here](https://dplyr.tidyverse.org/reference/across.html).
+[CLICK HERE](https://dplyr.tidyverse.org/reference/across.html) for `across()` documentation from tidyverse.org.
 
 From [tidyverse.org](https://dplyr.tidyverse.org/reference/across.html), `dplyr::across()` "makes it easy to apply the same transformation to multiple columns."
 
 ```{r, echo=FALSE, out.width="100%", fig.align = "center"}
-knitr::include_graphics("images/dplyr_across.png")  
+knitr::include_graphics("images/dplyr_across_where.jpeg")  
 ```
 
 The `across()` function is especially useful within `summarize()` to efficiently create summary tables with one or more functions applied to multiple variables (columns).
@@ -1270,7 +1296,7 @@ Starting with `penguins`, group data by island then use `across()` to find the m
 penguins %>% 
   group_by(______) %>% 
   summarize(across(contains("______"), 
-                   list(median = ______),
+                   median,
                    na.rm = TRUE,
                    .names = "_______")
             )
@@ -1280,15 +1306,71 @@ penguins %>%
 penguins %>% 
   group_by(species) %>% 
   summarize(across(contains("mm"), 
-                   list(med = median),
+                   median,
                    na.rm = TRUE,
                    .names = "{.col}_median")
             )
 ```
 
+#### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 2
+
+Starting with `penguins`, only keep observations for Adélie penguins, then use `across()` to find the maximum value for any numeric variable (hint: `where(is.numeric)`) for each island (i.e. group by island). 
+
+```{r across_q2, exercise = TRUE}
+
+```
+
+```{r across_q2-hint}
+penguins %>% 
+  filter(species == "______") %>% 
+  group_by(______) %>% 
+  summarize(across(where(_____), _____, na.rm = TRUE))
+```
+
+```{r across_q2-solution}
+penguins %>% 
+  filter(species == "Adelie") %>% 
+  group_by(island) %>% 
+  summarize(across(where(is.numeric), max, na.rm = TRUE))
+```
+
+#### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 3
+
+Starting from `penguins`, write a piped sequence to: 
+
+- Exclude penguins observed on Biscoe Island
+- Only keep variables `species` through `body_mass_g`
+- Rename the `species` variable to `spp_penguin`
+- Group the data by `spp_penguin`
+- Find the mean value for any variable containing the string "length", by penguin species, with column names updated to the original column name appended with "_max" at the end
+
+```{r across_q3, exercise = TRUE}
+
+```
+
+```{r across_q3-hint}
+penguins %>% 
+  filter(island != "_____") %>% 
+  select(_____:_____) %>% 
+  rename(_____ = _____) %>% 
+  group_by(_____) %>% 
+  summarize(across(contains("_____"), mean, na.rm = TRUE, .names = "{.col}_avg"))
+```
+
+```{r across_q3-solution}
+penguins %>% 
+  filter(island != "Biscoe") %>% 
+  select(species:body_mass_g) %>% 
+  rename(spp_penguin = species) %>% 
+  group_by(spp_penguin) %>% 
+  summarize(across(contains("length"), mean, na.rm = TRUE, .names = "{.col}_avg"))
+```
+
 
 
 ## 10. dplyr::count()
+
+[CLICK HERE](https://dplyr.tidyverse.org/reference/count.html) for `count()` documentation from tidyverse.org.
 
 The `dplyr::count()` function wraps a bunch of things into one beautiful friendly line of code to help you find counts of observations by group. To demonstrate what it does, let's find the counts of penguins in the `penguins` dataset by species in two different ways: 
 
@@ -1384,6 +1466,8 @@ penguins %>%
 ```
 
 ## 11. dplyr::case_when()
+
+[CLICK HERE](https://dplyr.tidyverse.org/reference/case_when.html) for `case_when()` documentation from tidyverse.org.
 
 The `case_when()` function is like a really friendly if-else statement. When used within `mutate()`, it allows you to add a new column containing values dependent on your condition(s). 
 
