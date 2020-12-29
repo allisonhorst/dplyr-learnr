@@ -8,28 +8,35 @@ runtime: shiny_prerendered
 ---
 
 ```{r setup, include=FALSE}
+
 library(learnr)
-library(dplyr)
-library(palmerpenguins)
+library(tidyverse)
+# library(palmerpenguins)
 library(kableExtra)
 library(fontawesome)
+library(here)
+
+penguins <- read_csv(here("data","penguins.csv"))
+
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## 1. Welcome!
+## 1. Welcome
 
-Hello! We're happy to see you here. In this lesson, you'll learn some basic functions to help you work with data using functions in the `dplyr` package, part of the `tidyverse` in *R*. 
+In this tutorial, we'll learn some basic functions to help you work with data using functions in the `dplyr` package, part of the `tidyverse` in *R*. 
 
 #### What is the `tidyverse`?
 
-The [`tidyverse`](https://www.tidyverse.org/) is a collection of packages that contain useful *functions* for working with and visualizing data. You don't need to install the `tidyverse` to write or run code in this tutorial, since it's already attached behind the scenes (but you can install it with `install.packages("tidyverse")` to work with it on your own outside of this tutorial).
+The [`tidyverse`](https://www.tidyverse.org/) is a collection of packages that contain useful functions for working with and visualizing data. You don't need to install the `tidyverse` to write or run code in this tutorial, since it's already attached behind the scenes (but you can install it with `install.packages("tidyverse")` to work with it on your own outside of this tutorial).
 
 #### What is `dplyr`?
 
-`dplyr` is one *package* in the tidyverse. It is the home to many functions that make it easier for us to work with data. Those include things like selecting specific columns, deciding which rows to keep based on whether or not they match our conditions, and finding summary statistics for different variables and groups. Sometimes we call these steps part of "data wrangling." 
+`dplyr` is one package in the tidyverse. It is the home to many functions that make it easier for us to work with data. Those include things like selecting specific columns, deciding which rows to keep based on whether or not they match our conditions, and finding summary statistics for different variables and groups. Sometimes we call these steps part of "data wrangling." 
 
 ```{r, echo=FALSE, out.width="100%", fig.align = "center", fig.cap = "Illustration from Hadley Wickham's 2019 talk, The Joy of Functional Programming"}
-knitr::include_graphics("images/data_wrangler.png")  
+
+knitr::include_graphics("images/data_wrangler.png") 
+
 ```
 
 #### What's in this tutorial? 
@@ -48,7 +55,7 @@ In this tutorial, you'll learn and practice examples using some functions in `dp
 
 #### What's not in this tutorial? 
 
-A whole lot. Visit https://dplyr.tidyverse.org/ and [R for Data Science](https://r4ds.had.co.nz/) for more information and examples. 
+A WHOLE LOT. Visit https://dplyr.tidyverse.org/ and [R for Data Science](https://r4ds.had.co.nz/) for more information and examples. 
 
 #### Code chunks for activities
 
@@ -90,15 +97,15 @@ We'll practice some wrangling in `dplyr` using data for penguin sizes recorded b
 
 You do **not** need to import the data to work through this tutorial - the data are already here waiting behind the scenes. If you *do* ever want to use the `penguins` dataset outside of this tutorial, you can install the `palmerpenguins` package from CRAN using `install.packages("palmerpenguins")` and learn more about the package [here](https://allisonhorst.github.io/palmerpenguins/).
 
-#### A bit about the penguins: 
+#### A bit about the penguins:
 
-The 3 species of penguins in this data set are Adélie, chinstrap and gentoo. They are all awesome and adorable. 
+The 3 species of penguins in this data set are Adélie, chinstrap and gentoo. They are all awesome and adorable.
 
 ```{r, echo=FALSE, out.width="100%", fig.align = "center"}
-knitr::include_graphics("images/lter_penguins.png")  
+knitr::include_graphics("images/lter_penguins.png")
 ```
 
-There are 8 variables included: 
+There are 8 variables included:
 
 - **species:** a factor denoting the penguin species (Adelie, Chinstrap, or Gentoo)
 - **island:** a factor denoting the island (in Palmer Archipelago, Antarctica) where observed
@@ -109,7 +116,7 @@ There are 8 variables included:
 - **sex:** a factor denoting penguin sex (male, female)
 - **year:** an integer denoting the study year (2007, 2008, or 2009)
 
-#### What do the data look like?  
+#### What do the data look like?
 
 Below is a glimpse of the first 10 lines of the penguins data (`NA`s indicate missing values throughout). Notice that the data are already in *tidy format* - meaning that:
 
@@ -118,34 +125,34 @@ Below is a glimpse of the first 10 lines of the penguins data (`NA`s indicate mi
 - Each value is in its own cell
 
 ```{r, echo = FALSE}
-penguins %>% 
-  head(10) %>% 
-  kable() %>% 
+penguins %>%
+  head(10) %>%
+  kable() %>%
   kable_styling(full_width = FALSE)
 ```
 
-OK, go forth and `filter()`! 
+OK, go forth and `filter()`!
 
 ## 3. dplyr::filter()
 
-[CLICK HERE](https://dplyr.tidyverse.org/reference/filter.html) for `filter()` documentation from tidyverse.org. 
+[CLICK HERE](https://dplyr.tidyverse.org/reference/filter.html) for `filter()` documentation from tidyverse.org.
 
-Use `filter()` to create a subset of the data only containing rows that satisfy your conditions. 
+Use `filter()` to create a subset of the data only containing rows that satisfy your conditions.
 
-In the image below, the data must satisfy two conditions for a row (observation) to be retained: *type* must match "otter", and *site* must match "bay". Only two of the rows satisfy those conditions (the ones outlined in purple), so only those two would be retained upon running the code. 
+In the image below, the data must satisfy two conditions for a row (observation) to be retained: *type* must match "otter", and *site* must match "bay". Only two of the rows satisfy those conditions (the ones outlined in purple), so only those two would be retained upon running the code.
 
 ```{r, echo=FALSE, out.width="80%", fig.align = "center"}
-knitr::include_graphics("images/dplyr_filter_sm.png")  
+knitr::include_graphics("images/dplyr_filter_sm.png")
 ```
 
 As a reminder for the following examples, here's a sample from the **penguins** data (5 observations / 344 total).
 
 ```{r}
-penguins[c(3,31,199,220,304),] %>% 
-  kable() %>% 
+penguins[c(3,31,199,220,304),] %>%
+  kable() %>%
   kable_styling(full_width = F)
 ```
-Now let's learn some different ways we can use `filter()` to help us keep or exclude rows based on our conditions. 
+Now let's learn some different ways we can use `filter()` to help us keep or exclude rows based on our conditions.
 
 ### FILTER EXAMPLES
 
@@ -188,24 +195,24 @@ Note that the output is identical for both methods above. It may seem like the f
 
 Introducing the pipe operator (`%>%`)!
 
-In the examples above, we specified the dataset within the `filter()` function. That's fine for now, but moving forward we'll want to use the pipe operator (`%>%`) to perform operations in logical sequence. You can think of the pipe operator as saying "and then" in your code. For example: 
+In the examples above, we specified the dataset within the `filter()` function. That's fine for now, but moving forward we'll want to use the pipe operator (`%>%`) to perform operations in logical sequence. You can think of the pipe operator as saying "and then" in your code. For example:
 
-Collect kindling AND THEN open the flue AND THEN start fire using the pipe looks like: 
+Collect kindling AND THEN open the flue AND THEN start fire using the pipe looks like:
 
 ```
 Collect kindling %>%
         open the flue %>%
         start fire
 ```
-  
-Let's say we want to use the pipe operator in the example above to filter for chinstraps. We start by telling R the data frame name, AND THEN what to do with it: data `%>%` thing, like this: 
+
+Let's say we want to use the pipe operator in the example above to filter for chinstraps. We start by telling R the data frame name, AND THEN what to do with it: data `%>%` thing, like this:
 
 ```{r, echo = TRUE, message = FALSE, warning = FALSE}
 penguins %>%
   dplyr::filter(species == "Chinstrap")
 ```
 
-Moving forward in this tutorial, we'll use the pipe operator. 
+Moving forward in this tutorial, we'll use the pipe operator.
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 4
 
@@ -219,22 +226,22 @@ Think carefully above the conditions. In this case, we only want to keep observa
 We can create a subset starting from penguins that only contains observations for Adélie penguins on Dream Island as follows:
 
 ```{r, echo = TRUE, message = FALSE, warning = FALSE}
-penguins %>% 
+penguins %>%
   filter(species == "Adelie", island == "Dream")
 ```
 
-### Keep or exclude rows based on values 
+### Keep or exclude rows based on values
 
-We can also use `dplyr::filter()` to keep or exclude rows based on variable values using standard logical operators (`==`, `<=`, `>=`, `<`, `>`). 
+We can also use `dplyr::filter()` to keep or exclude rows based on variable values using standard logical operators (`==`, `<=`, `>=`, `<`, `>`).
 
-Unlike when setting conditions for strings, values within `filter()` don't need to be within quotation marks. 
+Unlike when setting conditions for strings, values within `filter()` don't need to be within quotation marks.
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 5
 
 From `penguins`, keep penguins with a flipper length greater than 200 mm.
 
 ```{r, echo = TRUE, message = FALSE, warning = FALSE}
-penguins %>% 
+penguins %>%
   filter(flipper_length_mm > 200)
 ```
 
@@ -243,7 +250,7 @@ penguins %>%
 From `penguins`, keep observations where body mass less than or equal to 2900 g.
 
 ```{r, echo = TRUE, message = FALSE, warning = FALSE}
-penguins %>% 
+penguins %>%
   filter(body_mass_g <= 2900)
 ```
 
@@ -252,24 +259,24 @@ penguins %>%
 From `penguins`, keep observations for Adélie penguins with a bill length greater than 40 mm.
 
 ```{r, echo = TRUE, message = FALSE, warning = FALSE}
-penguins %>% 
+penguins %>%
   filter(species == "Adelie", bill_length_mm > 40)
 ```
 
 ### Exclude rows based on conditions
 
-Imagine you have a dataset that contains 10 penguin species, and you want to keep observations for 8 of those species. That would be a long list of species to match - if you were referring to the ones you want to keep. 
+Imagine you have a dataset that contains 10 penguin species, and you want to keep observations for 8 of those species. That would be a long list of species to match - if you were referring to the ones you want to keep.
 
 But we can also use `filter()` by saying what we **don't** want to keep, for example we could just list the two species we want to *exclude* to reduce the typing we have to do.
 
 Use `!=` to indicate "does not match" within the `filter()` function.
 
-#### `r fa("fas fa-robot", fill = "purple")` Example 8 
+#### `r fa("fas fa-robot", fill = "purple")` Example 8
 
-Exclude observations for chinstraps from the `penguins` data. In the code below, the `!=` operator is used within `filter()` to keep observations where the species variable **does not match** "Chinstrap". 
+Exclude observations for chinstraps from the `penguins` data. In the code below, the `!=` operator is used within `filter()` to keep observations where the species variable **does not match** "Chinstrap".
 
 ```{r, echo = TRUE, message = FALSE, warning = FALSE}
-penguins %>% 
+penguins %>%
   filter(species != "Chinstrap")
 ```
 
@@ -291,12 +298,12 @@ Use `filter()` to create a subset from `penguins` that only contains gentoo peng
 ```
 
 ```{r filter_q1-hint}
-penguins %>% 
+penguins %>%
   filter(species == "", bill_depth_mm > ___)
 ```
 
 ```{r filter_q1-solution}
-penguins %>% 
+penguins %>%
   filter(species == "Gentoo", bill_depth_mm > 15.5)
 ```
 
@@ -309,27 +316,27 @@ Use `filter()` to create a subset from `penguins` that contains observations for
 ```
 
 ```{r filter_q2-hint}
-penguins %>% 
-  filter(island %in% c("_____","_____"), 
+penguins %>%
+  filter(island %in% c("_____","_____"),
          sex == "_____")
 ```
 
 ```{r filter_q2-solution}
-penguins %>% 
-  filter(island %in% c("Dream","Biscoe"), 
+penguins %>%
+  filter(island %in% c("Dream","Biscoe"),
          sex == "male")
 ```
 
 #### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 3
 
-Use `filter()` to create a subset from `penguins` that contains observations for female Adélie penguins with bill lengths less than 35 mm. 
+Use `filter()` to create a subset from `penguins` that contains observations for female Adélie penguins with bill lengths less than 35 mm.
 
 ```{r filter_q3, exercise = TRUE}
 
 ```
 
 ```{r filter_q3-hint}
-penguins %>% 
+penguins %>%
   filter(sex == "_____",
          species == "_____",
          bill_length_mm < _____)
@@ -337,7 +344,7 @@ penguins %>%
 
 
 ```{r filter_q3-solution}
-penguins %>% 
+penguins %>%
   filter(sex == "female",
          species == "Adelie",
          bill_length_mm < 35)
@@ -352,16 +359,16 @@ Create a subset from `penguins` containing observations for female chinstrap pen
 ```
 
 ```{r filter_q4-hint}
-penguins %>% 
+penguins %>%
   filter(sex == "____",
-         species == "____") %>% 
+         species == "____") %>%
   filter(island %in% c("____","____"))
 ```
 
 ```{r filter_q4-solution}
-penguins %>% 
+penguins %>%
   filter(sex == "female",
-         species == "chinstrap") %>% 
+         species == "chinstrap") %>%
   filter(island %in% c("Dream","Torgersen"))
 ```
 
@@ -374,12 +381,12 @@ Create a subset from `penguins` that contains penguins that are either gentoos *
 ```
 
 ```{r filter_q5-hint}
-penguins %>% 
+penguins %>%
   filter(species == "_____" | body_mass_g > _____)
 ```
 
 ```{r filter_q5-solution}
-penguins %>% 
+penguins %>%
   filter(species == "Gentoo" | body_mass_g > 4500)
 ```
 
@@ -396,8 +403,8 @@ While making subsets of variables is rarely *necessary* for analyses (and is oft
 As a reminder, here's a sample from the **penguins** data (5 observations / 344 total).
 
 ```{r}
-penguins[c(3,31,199,220,304),] %>% 
-  kable() %>% 
+penguins[c(3,31,199,220,304),] %>%
+  kable() %>%
   kable_styling(full_width = F)
 ```
 
@@ -410,7 +417,7 @@ Within `select()`, list the variables that you want to keep in your new subset, 
 Keep columns `year`, `island`, and `species` from the `penguins` data.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   select(year, island, species)
 ```
 
@@ -419,42 +426,42 @@ penguins %>%
 Keep columns `species` and `body_mass_g` from the `penguins` data.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   select(species, body_mass_g)
 ```
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 3
 
-From the `penguins` data, keep all columns from `species` to `body_mass_g`. 
+From the `penguins` data, keep all columns from `species` to `body_mass_g`.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   select(species:body_mass_g)
 ```
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 4
 
-Keep columns from `species` to `bill_depth_mm` *and* `year` from the penguins data. Note that additional (non-sequential) variables are added after a comma. 
+Keep columns from `species` to `bill_depth_mm` *and* `year` from the penguins data. Note that additional (non-sequential) variables are added after a comma.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   select(species:bill_depth_mm, year)
 ```
 
 ### Excluding columns
 
-Use the minus sign (`-`) in front of a variable name to exclude a single variable. For example, if I add `-giraffe` within the `select()` function, the `giraffe` column will be excluded. 
+Use the minus sign (`-`) in front of a variable name to exclude a single variable. For example, if I add `-giraffe` within the `select()` function, the `giraffe` column will be excluded.
 
-To exclude a range of columns, use `!(giraffe:narwhale)`. 
+To exclude a range of columns, use `!(giraffe:narwhale)`.
 
-To exclude several non-sequential columns, use `!c(giraffe, wolf, shark)`. 
+To exclude several non-sequential columns, use `!c(giraffe, wolf, shark)`.
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 5
 
 From `penguins`, keep all variables *except* `island`
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   select(-island)
 ```
 
@@ -463,7 +470,7 @@ penguins %>%
 From `penguins`, keep all variables *except* those from `island` to `bill_depth_mm`
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   select(!(island:bill_depth_mm))
 ```
 
@@ -472,7 +479,7 @@ penguins %>%
 From `penguins`, keep all variables *except* `species`, `flipper_length_mm`, and `year`
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   select(!c(species, flipper_length_mm, year))
 ```
 
@@ -480,14 +487,14 @@ penguins %>%
 
 There are **many** helper functions that add power to `select()` (for example, selecting all variables of a specified class, or selecting all variables that start or end with a certain string pattern). Check out more [here](https://dplyr.tidyverse.org/reference/select.html).
 
-Here, we'll just explore a few: `starts_with()`, `ends_with()`, and `contains()`. These allow you to select any columns that match your conditions for the column name. 
+Here, we'll just explore a few: `starts_with()`, `ends_with()`, and `contains()`. These allow you to select any columns that match your conditions for the column name.
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 8
 
 Keep columns with names that start with "bill".
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   select(starts_with("bill"))
 ```
 
@@ -496,7 +503,7 @@ penguins %>%
 Keep columns with names that end in "mm".
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   select(ends_with("mm"))
 ```
 
@@ -505,7 +512,7 @@ penguins %>%
 Keep columns with names that contain "length".
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   select(contains("length"))
 ```
 
@@ -514,7 +521,7 @@ penguins %>%
 Keep columns that contain "length" OR start with "bill".
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   select(contains("length") | starts_with("bill"))
 ```
 
@@ -525,8 +532,8 @@ penguins %>%
 Make a subset from penguins that only contains observations for gentoo penguins, and then only keep columns for island, sex and body mass.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
-  filter(species == "Gentoo") %>% 
+penguins %>%
+  filter(species == "Gentoo") %>%
   select(island, sex, body_mass_g)
 ```
 
@@ -535,8 +542,8 @@ penguins %>%
 Make a subset from penguins that only contains observations for male penguins with flippers longer than 200 mm, and then only keep columns that end with "mm".
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
-  filter(sex == "male", flipper_length_mm > 200) %>% 
+penguins %>%
+  filter(sex == "male", flipper_length_mm > 200) %>%
   select(ends_with("mm"))
 ```
 
@@ -557,7 +564,7 @@ Starting with the `penguins` data, only keep the `body_mass_g` variable.
 ```
 
 ```{r select_q1-solution}
-penguins %>% 
+penguins %>%
   select(body_mass_g)
 ```
 
@@ -570,12 +577,12 @@ Starting with the `penguins` data, keep columns from `bill_length_mm` to `body_m
 ```
 
 ```{r select_q2-hint}
-penguins %>% 
+penguins %>%
   select(______:______, ______)
 ```
 
 ```{r select_q2-solution}
-penguins %>% 
+penguins %>%
   select(bill_lenth_mm:body_mass_g, year)
 ```
 
@@ -588,7 +595,7 @@ Starting with the `penguins` data, keep all columns except `island`
 ```
 
 ```{r select_q3-solution}
-penguins %>% 
+penguins %>%
   select(-island)
 ```
 
@@ -601,12 +608,12 @@ From `penguins`, keep all variables *except* `species`, `sex` and `year`.
 ```
 
 ```{r select_q4-hint}
-penguins %>% 
+penguins %>%
   select(!c(____, ____, ____))
 ```
 
 ```{r select_q4-solution}
-penguins %>% 
+penguins %>%
   select(!c(species, sex, year))
 ```
 
@@ -619,12 +626,12 @@ From `penguins`, keep the `species` column and any columns that end with "mm".
 ```
 
 ```{r select_q5-hint}
-penguins %>% 
+penguins %>%
   select(______, ends_with("__"))
 ```
 
 ```{r select_q5-solution}
-penguins %>% 
+penguins %>%
   select(species, ends_with("mm"))
 ```
 
@@ -637,12 +644,12 @@ From `penguins`, keep any columns that contain "bill" OR end with "mm".
 ```
 
 ```{r select_q6-hint}
-penguins %>% 
+penguins %>%
   select(contains("___") | ends_with("___"))
 ```
 
 ```{r select_q6-solution}
-penguins %>% 
+penguins %>%
   select(contains("bill") | ends_with("mm"))
 ```
 
@@ -658,14 +665,14 @@ In a piped sequence, starting from `penguins`:
 ```
 
 ```{r select_q7-hint}
-penguins %>% 
-  filter(sex == "_____", island == "_____") %>% 
+penguins %>%
+  filter(sex == "_____", island == "_____") %>%
   select(_____, starts_with("____"))
 ```
 
 ```{r select_q7-solution}
-penguins %>% 
-  filter(sex == "female", island == "Dream") %>% 
+penguins %>%
+  filter(sex == "female", island == "Dream") %>%
   select(species, starts_with("bill"))
 ```
 
@@ -673,13 +680,13 @@ penguins %>%
 
 ## 5. dplyr::relocate()
 
-[CLICK HERE](https://dplyr.tidyverse.org/reference/relocate.html) for `relocate()` documentation from tidyverse.org. 
+[CLICK HERE](https://dplyr.tidyverse.org/reference/relocate.html) for `relocate()` documentation from tidyverse.org.
 
 ```{r, echo=FALSE, out.width="100%", fig.align = "center"}
-knitr::include_graphics("images/dplyr_relocate.png")  
+knitr::include_graphics("images/dplyr_relocate.png")
 ```
 
-Use `relocate()` to move columns around, without messing with rows or groups. Some useful bits: 
+Use `relocate()` to move columns around, without messing with rows or groups. Some useful bits:
 
 - Use `.before` or `.after` to move a column to before or after another (by name or class)
 - If a single column is within the function (e.g. `relocate(col_A)`), that column is moved to the front
@@ -689,8 +696,8 @@ See details and more examples from tidyverse.org [here](https://dplyr.tidyverse.
 As a reminder, here's a sample from the **penguins** data (5 observations / 344 total).
 
 ```{r}
-penguins[c(3,31,199,220,304),] %>% 
-  kable() %>% 
+penguins[c(3,31,199,220,304),] %>%
+  kable() %>%
   kable_styling(full_width = F)
 ```
 
@@ -701,7 +708,7 @@ penguins[c(3,31,199,220,304),] %>%
 Move the `year` column to the front of the `penguins` data.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   relocate(year)
 ```
 
@@ -710,7 +717,7 @@ penguins %>%
 Starting with `penguins`, move the `flipper_length_mm` column to after the `island` column.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   relocate(flipper_length_mm, .after = island)
 ```
 
@@ -719,7 +726,7 @@ penguins %>%
 Starting with `penguins`, move the `bill_lenth_mm` column to before `year`.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   relocate(bill_length_mm, .before = year)
 ```
 
@@ -728,7 +735,7 @@ penguins %>%
 Starting with `penguins`, move any numeric variables to after any factor variables.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   relocate(where(is.numeric), .after = where(is.factor))
 ```
 
@@ -748,7 +755,7 @@ Starting with `penguins`, move the `species` variable to before the `sex` variab
 
 ```
 ```{r relocate_q1-solution}
-penguins %>% 
+penguins %>%
   relocate(species, .before = sex)
 ```
 
@@ -760,7 +767,7 @@ Starting with `penguins`, relocate the `bill_length_mm` variable so that it is t
 
 ```
 ```{r relocate_q-solution}
-penguins %>% 
+penguins %>%
   relocate(bill_length_mm)
 ```
 
@@ -773,7 +780,7 @@ Move any factor variables (hint: `is.factor`) to after any integer variables (`i
 ```
 
 ```{r relocate_q3-solution}
-penguins %>% 
+penguins %>%
   relocate(where(is.factor), .after = where(is.integer))
 ```
 
@@ -782,32 +789,32 @@ penguins %>%
 
 [CLICK HERE](https://dplyr.tidyverse.org/reference/rename.html) for `rename()` documentation from tidyverse.org.
 
-Use `rename()` to change the name of one or more columns. Generally, it'll look something like this: 
+Use `rename()` to change the name of one or more columns. Generally, it'll look something like this:
 
   `df %>% rename(new_name = old_name)`
-  
+
 You can also use a function to rename multiple columns using `rename_with()`.
-  
+
 ```{r, echo=FALSE, out.width="100%", fig.align = "center"}
-knitr::include_graphics("images/rename_sm.jpg")  
+knitr::include_graphics("images/rename_sm.jpg")
 ```
 
 As a reminder, here's a sample from the **penguins** data (5 observations / 344 total).
 
 ```{r}
-penguins[c(3,31,199,220,304),] %>% 
-  kable() %>% 
+penguins[c(3,31,199,220,304),] %>%
+  kable() %>%
   kable_styling(full_width = F)
 ```
-  
+
 ### RENAME EXAMPLES
-    
+
 #### `r fa("fas fa-robot", fill = "purple")` Example 1
 
 Rename the `island` column to `palmer_island`.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   rename(palmer_island = island)
 ```
 
@@ -816,7 +823,7 @@ penguins %>%
 Rename the `year` column to `study_yr`, and `body_mass_g` to `mass`.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   rename(study_yr = year, mass = body_mass_g)
 ```
 
@@ -824,19 +831,19 @@ penguins %>%
 
 Convert all column names in `penguins` to upper case with `toupper`.
 
-Note: This is probably not a thing you'd actually want to do in the wild. 
+Note: This is probably not a thing you'd actually want to do in the wild.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   rename_with(toupper)
 ```
 
-#### `r fa("fas fa-robot", fill = "purple")` Example 4. 
+#### `r fa("fas fa-robot", fill = "purple")` Example 4.
 
 Convert all column names in `penguins` that end with "mm" to upper case (`toupper`).
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   rename_with(toupper, ends_with("mm"))
 ```
 
@@ -855,7 +862,7 @@ Starting with `penguins`, rename the `flipper_length_mm` column to `flipper_mm`.
 ```
 
 ```{r rename_q1-solution}
-penguins %>% 
+penguins %>%
   rename(flipper_mm = flipper_length_mm)
 ```
 
@@ -868,7 +875,7 @@ Starting with `penguins`, rename the `island` column to `island_name` and the `s
 ```
 
 ```{r rename_q2-solution}
-penguins %>% 
+penguins %>%
   rename(island_name = island,
          penguin_spp = species)
 ```
@@ -882,12 +889,12 @@ Starting with `penguins`, convert any column names that start with "bill" to upp
 ```
 
 ```{r rename_q3-hint}
-penguins %>% 
+penguins %>%
   rename_with(____, starts_with("____"))
 ```
 
 ```{r rename_q3-solution}
-penguins %>% 
+penguins %>%
   rename_with(toupper, starts_with("bill"))
 ```
 
@@ -898,28 +905,28 @@ penguins %>%
 Use `mutate()` to add a new column, while keeping the existing columns. The general structure is:
 
 ```{r, echo = TRUE, eval = FALSE}
-df %>% 
+df %>%
   mutate(new_column_name = what_it_contains)
 ```
-  
+
 For example, if I had a data frame `df` with columns `A` and `B`, I can add a new column `C` that is the sum of `A` and `B` as follows (note: you can also use `sum(A,B)` here instead of `A + B`):
 
 ```{r, echo = TRUE, eval = FALSE}
-df %>% 
+df %>%
   mutate(C = A + B)
 ```
 
 ...as demonstrated by mutant monsters below:
 
 ```{r, echo=FALSE, out.width="80%", fig.align = "center"}
-knitr::include_graphics("images/dplyr_mutate.png")  
+knitr::include_graphics("images/dplyr_mutate.png")
 ```
 
 As a reminder, here's a sample from the **penguins** data (5 observations / 344 total).
 
 ```{r}
-penguins[c(3,31,199,220,304),] %>% 
-  kable() %>% 
+penguins[c(3,31,199,220,304),] %>%
+  kable() %>%
   kable_styling(full_width = F)
 ```
 
@@ -930,7 +937,7 @@ penguins[c(3,31,199,220,304),] %>%
 Add a new column to penguins with body mass (currently in grams) converted to kilograms.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   mutate(body_mass_kg = body_mass_g / 1000)
 ```
 
@@ -939,7 +946,7 @@ penguins %>%
 Add a new column to penguins with the ratio of bill length to bill depth.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   mutate(bill_ratio = bill_length_mm / bill_depth_mm)
 ```
 
@@ -948,7 +955,7 @@ penguins %>%
 Add a new column with a sequence of values from 1 to the length of the data frame.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   mutate(record_number = seq(1:n()))
 ```
 
@@ -959,7 +966,7 @@ Convert the `island` variable to a character using `mutate`.
 Note / danger: this is a different (and a bit dangerous) use of `mutate()`. If you give the new column the same name as an existing column, the existing column will be **replaced**. As a general rule, if in doubt ADD A COLUMN (little cost) instead of overwriting a column.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   mutate(island = as.character(island))
 ```
 
@@ -967,11 +974,11 @@ penguins %>%
 
 Use `fct_relevel()` within `mutate()` to reorder the factor levels of `island` to (1) Torgersen, (2) Biscoe, (3) Dream.
 
-Note: See `fct_relevel()` & `fct_reorder()` in the `forcats` package to change the order of factor levels. 
+Note: See `fct_relevel()` & `fct_reorder()` in the `forcats` package to change the order of factor levels.
 
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   mutate(island = fct_relevel(island, "Torgersen", "Biscoe", "Dream"))
 ```
 
@@ -983,19 +990,19 @@ penguins %>%
 
 #### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 1
 
-Add a column to `penguins` that contains a new column `flipper_m`, which is the `flipper_length_mm` (flipper length in millimeters) converted to units of meters. 
+Add a column to `penguins` that contains a new column `flipper_m`, which is the `flipper_length_mm` (flipper length in millimeters) converted to units of meters.
 
 ```{r mutate_q1, exercise = TRUE}
 
 ```
 
 ```{r mutate_q1-hint}
-penguins %>% 
+penguins %>%
   mutate(_____ = _____ / 1000)
 ```
 
 ```{r mutate_q1-solution}
-penguins %>% 
+penguins %>%
   mutate(flipper_m = flipper_length_mm / 1000)
 ```
 
@@ -1008,12 +1015,12 @@ The `year` column in `penguins` is currently an integer. Add a new column named 
 ```
 
 ```{r mutate_q2-hint}
-penguins %>% 
+penguins %>%
   mutate(_____ = as.factor(_____))
 ```
 
 ```{r mutate_q2-solution}
-penguins %>% 
+penguins %>%
   mutate(year_fct = as.factor(year))
 ```
 
@@ -1027,28 +1034,28 @@ To `penguins`, add a new column `mass_lb` that contains penguin body mass, curre
 ```
 
 ```{r mutate_q3-solution}
-penguins %>% 
+penguins %>%
   mutate(mass_lb = body_mass_g * 0.0022)
 ```
 
-## 8. dplyr::group_by() %>% summarize() 
+## 8. dplyr::group_by() %>% summarize()
 
 [CLICK HERE](https://dplyr.tidyverse.org/reference/group_by.html) for `group_by()` documentation, and [here](https://dplyr.tidyverse.org/reference/summarise.html)
  for `summarize()` documentation, from tidyverse.org.
 
-Use the combination of `group_by()` and `summarize()` to find find summary statistics for different groups, and put them in a nice table. 
+Use the combination of `group_by()` and `summarize()` to find find summary statistics for different groups, and put them in a nice table.
 
-From [dplyr.tidyverse.org](https://dplyr.tidyverse.org/): 
+From [dplyr.tidyverse.org](https://dplyr.tidyverse.org/):
 - `group_by()` "takes an existing tbl and converts it into a grouped tbl where operations are performed 'by group'"
 - `summarize()` "creates a new data frame. It will have one (or more) rows for each combination of grouping variables; if there are no grouping variables, the output will have a single row summarising all observations in the input. It will contain one column for each grouping variable and one column for each of the summary statistics that you have specified"
 
-Basically, specify groups within your data with `group_by()`, then use `summarize()` to calculate something (e.g. the mean or other statistic) for each group, & return it in a nice table. It's a powerhouse combo. 
+Basically, specify groups within your data with `group_by()`, then use `summarize()` to calculate something (e.g. the mean or other statistic) for each group, & return it in a nice table. It's a powerhouse combo.
 
 As a reminder for the following examples, here's a sample from the **penguins** data (5 observations / 344 total).
 
 ```{r}
-penguins[c(3,31,199,220,304),] %>% 
-  kable() %>% 
+penguins[c(3,31,199,220,304),] %>%
+  kable() %>%
   kable_styling(full_width = F)
 ```
 
@@ -1056,50 +1063,50 @@ penguins[c(3,31,199,220,304),] %>%
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 1
 
-Use `group_by()` and `summarize()` to prepare a summary table containing the mean of penguin body mass, grouped by penguin species. Note that the `na.rm = TRUE` argument is added to exclude missing values. 
+Use `group_by()` and `summarize()` to prepare a summary table containing the mean of penguin body mass, grouped by penguin species. Note that the `na.rm = TRUE` argument is added to exclude missing values.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
-  group_by(species) %>% 
+penguins %>%
+  group_by(species) %>%
   summarize(mass_mean = mean(body_mass_g, na.rm = TRUE))
 ```
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 2
 
-Use `group_by()` and `summarize()` to prepare a summary table containing the mean and standard deviation of penguin body mass, grouped by penguin species. 
+Use `group_by()` and `summarize()` to prepare a summary table containing the mean and standard deviation of penguin body mass, grouped by penguin species.
 
 Notice that there are now *two* columns created by `summarize()`, mass_mean and mass_sd.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
-  group_by(species) %>% 
+penguins %>%
+  group_by(species) %>%
   summarize(mass_mean = mean(body_mass_g, na.rm = TRUE),
             mass_sd = sd(body_mass_g, na.rm = TRUE))
 ```
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 3
 
-Use `group_by()` and `summarize()` to prepare a summary table containing the mean and standard deviation of penguin bill length, grouped by penguin species and sex. 
+Use `group_by()` and `summarize()` to prepare a summary table containing the mean and standard deviation of penguin bill length, grouped by penguin species and sex.
 
-Note that the data are now grouped by `species` and `sex` (within `group_by()`), and two columns are created: `bill_length_mean` and `bill_length_sd`, which will contain the mean and standard deviation of bill length within each group. 
+Note that the data are now grouped by `species` and `sex` (within `group_by()`), and two columns are created: `bill_length_mean` and `bill_length_sd`, which will contain the mean and standard deviation of bill length within each group.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
-  group_by(species, sex) %>% 
+penguins %>%
+  group_by(species, sex) %>%
   summarize(bill_length_mean = mean(bill_length_mm, na.rm = TRUE),
             bill_length_sd = sd(bill_length_mm, na.rm = TRUE))
 ```
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 4
 
-Use `group_by()` and `summarize()` to prepare a summary table containing the maximum and minimum flipper length for male Adélie penguins, grouped by island. 
+Use `group_by()` and `summarize()` to prepare a summary table containing the maximum and minimum flipper length for male Adélie penguins, grouped by island.
 
-Here, we'll first use `filter()` to only keep rows for male Adélie penguins, then use `group_by()` and `summarize()` to find the minimum and maximum flipper length **by island**, & put them in a nice table. 
+Here, we'll first use `filter()` to only keep rows for male Adélie penguins, then use `group_by()` and `summarize()` to find the minimum and maximum flipper length **by island**, & put them in a nice table.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
-  filter(species == "Adelie", sex == "male") %>% 
-  group_by(island) %>% 
+penguins %>%
+  filter(species == "Adelie", sex == "male") %>%
+  group_by(island) %>%
   summarize(flip_max_length = max(flipper_length_mm),
             flip_min_length = min(flipper_length_mm))
 ```
@@ -1119,17 +1126,17 @@ Starting with `penguins`, create a summary table containing the maximum and mini
 ```
 
 ```{r group_summarize_q1-hint}
-penguins %>% 
-  filter(species == "_______") %>% 
-  group_by(_____) %>% 
+penguins %>%
+  filter(species == "_______") %>%
+  group_by(_____) %>%
   summarize(flip_max = max(_____),
             flip_min = min(_____))
 ```
 
 ```{r group_summarize_q1-solution}
-penguins %>% 
-  filter(species == "Chinstrap") %>% 
-  group_by(island) %>% 
+penguins %>%
+  filter(species == "Chinstrap") %>%
+  group_by(island) %>%
   summarize(flip_max = max(flipper_length_mm),
             flip_min = min(flipper_length_mm))
 ```
@@ -1145,8 +1152,8 @@ Don't forget: `na.rm = TRUE`
 ```
 
 ```{r group_summarize_q2-hint}
-penguins %>% 
-  group_by(_____, _____) %>% 
+penguins %>%
+  group_by(_____, _____) %>%
   summarize(
     _________ = mean(______, na.rm = TRUE),
     _________ = mean(______, na.rm = TRUE)
@@ -1154,8 +1161,8 @@ penguins %>%
 ```
 
 ```{r group_summarize_q2-solution}
-penguins %>% 
-  group_by(species, year) %>% 
+penguins %>%
+  group_by(species, year) %>%
   summarize(
     bill_depth_mean = mean(bill_depth_mm, na.rm = TRUE),
     bill_length_mean = mean(bill_length_mm, na.rm = TRUE)
@@ -1176,18 +1183,18 @@ Starting with `penguins`, in a piped sequence:
 ```
 
 ```{r group_summarize_q3-hint}
-penguins %>% 
-  mutate(bill_ratio = ______ / ______) %>% 
-  select(______, ______) %>% 
-  group_by(______) %>% 
+penguins %>%
+  mutate(bill_ratio = ______ / ______) %>%
+  select(______, ______) %>%
+  group_by(______) %>%
   summarize(______ = mean(______, na.rm = TRUE))
 ```
 
 ```{r group_summarize_q3-solution}
-penguins %>% 
-  mutate(bill_ratio = bill_length_mm / bill_depth_mm) %>% 
-  select(species, bill_ratio) %>% 
-  group_by(species) %>% 
+penguins %>%
+  mutate(bill_ratio = bill_length_mm / bill_depth_mm) %>%
+  select(species, bill_ratio) %>%
+  group_by(species) %>%
   summarize(bill_ratio_mean = mean(bill_ratio, na.rm = TRUE))
 ```
 
@@ -1198,26 +1205,26 @@ penguins %>%
 From [tidyverse.org](https://dplyr.tidyverse.org/reference/across.html), `dplyr::across()` "makes it easy to apply the same transformation to multiple columns."
 
 ```{r, echo=FALSE, out.width="100%", fig.align = "center"}
-knitr::include_graphics("images/dplyr_across_where.jpeg")  
+knitr::include_graphics("images/dplyr_across_where.jpeg")
 ```
 
 The `across()` function is especially useful within `summarize()` to efficiently create summary tables with one or more functions applied to multiple variables (columns).
 
-Let's compare two ways of doing the same thing: creating a summary table of mean values for all penguin size measurements ending in "mm" (bill depth, bill length, flipper length), by species. 
+Let's compare two ways of doing the same thing: creating a summary table of mean values for all penguin size measurements ending in "mm" (bill depth, bill length, flipper length), by species.
 
 As a reminder, here's a sample from the **penguins** data (5 observations / 344 total).
 
 ```{r}
-penguins[c(3,31,199,220,304),] %>% 
-  kable() %>% 
+penguins[c(3,31,199,220,304),] %>%
+  kable() %>%
   kable_styling(full_width = F)
 ```
 
 #### Approach 1: Using `group_by()` %>% `summarize()`
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE, eval = FALSE}
-penguins %>% 
-  group_by(species) %>% 
+penguins %>%
+  group_by(species) %>%
   summarize(bill_length_mean = mean(bill_length_mm, na.rm = TRUE),
             bill_depth_mean = mean(bill_depth_mm, na.rm = TRUE),
             flipper_length_mean = mean(flipper_length_mm, na.rm = TRUE))
@@ -1226,14 +1233,14 @@ penguins %>%
 #### Approach 2: Using `across()` within `summarize()`
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
-  group_by(species) %>% 
+penguins %>%
+  group_by(species) %>%
   summarize(across(ends_with("mm"), mean, na.rm = TRUE))
 ```
 
-The output is the same - but the second way (using `across()`) is much more efficient - and becomes even more useful as the number of columns you want to transform increases! 
+The output is the same - but the second way (using `across()`) is much more efficient - and becomes even more useful as the number of columns you want to transform increases!
 
-The `across()` function also happily accepts most helper functions introduced for `select()`, including: `starts_with()`, `ends_with()`, `contains()`, as well as to specify classes (e.g. `is.numeric`, `is.character`, etc.). Follow along with the examples & exercises below to learn more! 
+The `across()` function also happily accepts most helper functions introduced for `select()`, including: `starts_with()`, `ends_with()`, `contains()`, as well as to specify classes (e.g. `is.numeric`, `is.character`, etc.). Follow along with the examples & exercises below to learn more!
 
 ### ACROSS EXAMPLES
 
@@ -1242,26 +1249,26 @@ The `across()` function also happily accepts most helper functions introduced fo
 Starting with `penguins`, use `across()` within `group_by()` and `summarize()` to make a summary table containing the maximum value within any column starting with "bill", grouped by `year`.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
-  group_by(year) %>% 
+penguins %>%
+  group_by(year) %>%
   summarize(across(starts_with("bill"), max, na.rm = TRUE))
 ```
 
-Since what is presented in the table is the *maximum* value for bill length and depth, we probably want to update the column names. We could do that manually using `rename()`, or we can add the `.names = ` argument within `across()` as shown in the examples below. 
+Since what is presented in the table is the *maximum* value for bill length and depth, we probably want to update the column names. We could do that manually using `rename()`, or we can add the `.names = ` argument within `across()` as shown in the examples below.
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 2
 
 Repeat the example above, but add an argument that will automatically update the column names containing the maximum bill length and depth to start with "max_" followed by the original column name.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   group_by(year) %>%
   summarise(across(starts_with("bill"), max, na.rm = TRUE, .names = "max_{.col}"))
 ```
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 3
 
-Starting from `penguins`, create a summary table that finds the mean and standard deviation for all variables containing the string "length", grouped by penguin species. Update the column names to start with "avg_" or "sd_", followed by the original column names. 
+Starting from `penguins`, create a summary table that finds the mean and standard deviation for all variables containing the string "length", grouped by penguin species. Update the column names to start with "avg_" or "sd_", followed by the original column names.
 
 There's quite a bit happening here, so a little breakdown:
 
@@ -1270,11 +1277,11 @@ There's quite a bit happening here, so a little breakdown:
 - We use `.names = ` to define the final column names in the summary table. Here, the name should start with the function "name" specified above ("avg" or "stdev"), then an underscore, then the original column name (that's what `"{.fn}_{.col}"` will do)
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
-  group_by(species) %>% 
-  summarize(across(contains("length"), 
-                   list(avg = mean, stdev = sd), 
-                   na.rm = TRUE, 
+penguins %>%
+  group_by(species) %>%
+  summarize(across(contains("length"),
+                   list(avg = mean, stdev = sd),
+                   na.rm = TRUE,
                    .names = "{.fn}_{.col}"))
 ```
 
@@ -1286,16 +1293,16 @@ penguins %>%
 
 #### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 1
 
-Starting with `penguins`, group data by island then use `across()` to find the median value of groups for any columns containing the string "mm". The names in the resulting table should be the original column name followed by an underscore, then the word "median" (e.g. colname_median). 
+Starting with `penguins`, group data by island then use `across()` to find the median value of groups for any columns containing the string "mm". The names in the resulting table should be the original column name followed by an underscore, then the word "median" (e.g. colname_median).
 
 ```{r across_q1, exercise = TRUE}
 
 ```
 
 ```{r across_q1-hint}
-penguins %>% 
-  group_by(______) %>% 
-  summarize(across(contains("______"), 
+penguins %>%
+  group_by(______) %>%
+  summarize(across(contains("______"),
                    median,
                    na.rm = TRUE,
                    .names = "_______")
@@ -1303,9 +1310,9 @@ penguins %>%
 ```
 
 ```{r across_q1-solution}
-penguins %>% 
-  group_by(species) %>% 
-  summarize(across(contains("mm"), 
+penguins %>%
+  group_by(species) %>%
+  summarize(across(contains("mm"),
                    median,
                    na.rm = TRUE,
                    .names = "{.col}_median")
@@ -1314,29 +1321,29 @@ penguins %>%
 
 #### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 2
 
-Starting with `penguins`, only keep observations for Adélie penguins, then use `across()` to find the maximum value for any numeric variable (hint: `where(is.numeric)`) for each island (i.e. group by island). 
+Starting with `penguins`, only keep observations for Adélie penguins, then use `across()` to find the maximum value for any numeric variable (hint: `where(is.numeric)`) for each island (i.e. group by island).
 
 ```{r across_q2, exercise = TRUE}
 
 ```
 
 ```{r across_q2-hint}
-penguins %>% 
-  filter(species == "______") %>% 
-  group_by(______) %>% 
+penguins %>%
+  filter(species == "______") %>%
+  group_by(______) %>%
   summarize(across(where(_____), _____, na.rm = TRUE))
 ```
 
 ```{r across_q2-solution}
-penguins %>% 
-  filter(species == "Adelie") %>% 
-  group_by(island) %>% 
+penguins %>%
+  filter(species == "Adelie") %>%
+  group_by(island) %>%
   summarize(across(where(is.numeric), max, na.rm = TRUE))
 ```
 
 #### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 3
 
-Starting from `penguins`, write a piped sequence to: 
+Starting from `penguins`, write a piped sequence to:
 
 - Exclude penguins observed on Biscoe Island
 - Only keep variables `species` through `body_mass_g`
@@ -1349,20 +1356,20 @@ Starting from `penguins`, write a piped sequence to:
 ```
 
 ```{r across_q3-hint}
-penguins %>% 
-  filter(island != "_____") %>% 
-  select(_____:_____) %>% 
-  rename(_____ = _____) %>% 
-  group_by(_____) %>% 
+penguins %>%
+  filter(island != "_____") %>%
+  select(_____:_____) %>%
+  rename(_____ = _____) %>%
+  group_by(_____) %>%
   summarize(across(contains("_____"), mean, na.rm = TRUE, .names = "{.col}_avg"))
 ```
 
 ```{r across_q3-solution}
-penguins %>% 
-  filter(island != "Biscoe") %>% 
-  select(species:body_mass_g) %>% 
-  rename(spp_penguin = species) %>% 
-  group_by(spp_penguin) %>% 
+penguins %>%
+  filter(island != "Biscoe") %>%
+  select(species:body_mass_g) %>%
+  rename(spp_penguin = species) %>%
+  group_by(spp_penguin) %>%
   summarize(across(contains("length"), mean, na.rm = TRUE, .names = "{.col}_avg"))
 ```
 
@@ -1372,7 +1379,7 @@ penguins %>%
 
 [CLICK HERE](https://dplyr.tidyverse.org/reference/count.html) for `count()` documentation from tidyverse.org.
 
-The `dplyr::count()` function wraps a bunch of things into one beautiful friendly line of code to help you find counts of observations by group. To demonstrate what it does, let's find the counts of penguins in the `penguins` dataset by species in two different ways: 
+The `dplyr::count()` function wraps a bunch of things into one beautiful friendly line of code to help you find counts of observations by group. To demonstrate what it does, let's find the counts of penguins in the `penguins` dataset by species in two different ways:
 
 1. Using `group_by()` %>% `summarize()` with `n()` to count observations
 2. Using `count()` to do the exact same thing
@@ -1380,16 +1387,16 @@ The `dplyr::count()` function wraps a bunch of things into one beautiful friendl
 As a reminder, here's a sample from the **penguins** data (5 observations / 344 total).
 
 ```{r}
-penguins[c(3,31,199,220,304),] %>% 
-  kable() %>% 
+penguins[c(3,31,199,220,304),] %>%
+  kable() %>%
   kable_styling(full_width = F)
 ```
 
 #### Approach 1: `group_by()` %>% `summarize()` w/ `n()`
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
-  group_by(species) %>% 
+penguins %>%
+  group_by(species) %>%
   summarize(
     n = n()
   )
@@ -1398,13 +1405,13 @@ penguins %>%
 #### Approach 2: `count()`
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   count(species)
 ```
 
-Pretty cool, right? The `dplyr::count()` function does all the work of `group_by()`, `summarize()` **and** `n()` for you! 
+Pretty cool, right? The `dplyr::count()` function does all the work of `group_by()`, `summarize()` **and** `n()` for you!
 
-**Note:** The default assumes that each observation is in its own row (case format). If you have a column containing *counts* (i.e. more that one observation are represented in a single row) use the `wt = ` argument to specify the column containing counts, then the `count()` function will sum them instead to find totals. 
+**Note:** The default assumes that each observation is in its own row (case format). If you have a column containing *counts* (i.e. more that one observation are represented in a single row) use the `wt = ` argument to specify the column containing counts, then the `count()` function will sum them instead to find totals.
 
 ### COUNT EXAMPLES
 
@@ -1413,7 +1420,7 @@ Pretty cool, right? The `dplyr::count()` function does all the work of `group_by
 Starting with the `penguins` dataset, find the counts of penguins by species and year.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   count(species, year)
 ```
 
@@ -1422,7 +1429,7 @@ penguins %>%
 Starting from `penguins`, find the number of observations by island.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   count(island)
 ```
 
@@ -1441,27 +1448,27 @@ Starting with `penguins`, find counts of observation by species, island and year
 ```
 
 ```{r count_q1-solution}
-penguins %>% 
+penguins %>%
   count(species, island, year)
 ```
 
 #### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 2
 
-Starting with `penguins`, filter to only keep Adélie and gentoo penguins, then find counts by species and sex. 
+Starting with `penguins`, filter to only keep Adélie and gentoo penguins, then find counts by species and sex.
 
 ```{r count_q2, exercise = TRUE}
 
 ```
 
 ```{r count_q2-hint}
-penguins %>% 
-  filter(species %in% c("_____","_____")) %>% 
+penguins %>%
+  filter(species %in% c("_____","_____")) %>%
   count(_____, _____)
 ```
 
 ```{r count_q2-solution}
-penguins %>% 
-  filter(species %in% c("Adelie","Gentoo")) %>% 
+penguins %>%
+  filter(species %in% c("Adelie","Gentoo")) %>%
   count(species, sex)
 ```
 
@@ -1469,10 +1476,10 @@ penguins %>%
 
 [CLICK HERE](https://dplyr.tidyverse.org/reference/case_when.html) for `case_when()` documentation from tidyverse.org.
 
-The `case_when()` function is like a really friendly if-else statement. When used within `mutate()`, it allows you to add a new column containing values dependent on your condition(s). 
+The `case_when()` function is like a really friendly if-else statement. When used within `mutate()`, it allows you to add a new column containing values dependent on your condition(s).
 
 ```{r, echo=FALSE, out.width="80%", fig.align = "center"}
-knitr::include_graphics("images/dplyr_case_when_sm.png")  
+knitr::include_graphics("images/dplyr_case_when_sm.png")
 ```
 
 ### CASE_WHEN EXAMPLES
@@ -1486,7 +1493,7 @@ To `penguins`, add a new column `size_bin` that contains:
 - "small" if body mass is less than or equal to 3000 g
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
+penguins %>%
   mutate(size_bin = case_when(
       body_mass_g > 4500 ~ "large",
       body_mass_g > 3000 & body_mass_g <= 4500 ~ "medium",
@@ -1497,7 +1504,7 @@ penguins %>%
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 2
 
-Starting with `penguins`: 
+Starting with `penguins`:
 
 - Limit the columns to `species`, `year`, and `flipper_length_mm`
 - Rename the `year` column to `study_year`
@@ -1507,12 +1514,12 @@ Starting with `penguins`:
   - 1 if `flipper_length_mm` is < 200 mm
   - 2 if `flipper_length_mm` is >= 200 mm
   - 0 if `flipper_length_mm` is anything else (e.g. `NA`)
-      
+
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
-penguins %>% 
-  select(species, year, flipper_length_mm) %>% 
-  rename(study_year = year) %>% 
-  filter(species == "Adelie") %>% 
+penguins %>%
+  select(species, year, flipper_length_mm) %>%
+  rename(study_year = year) %>%
+  filter(species == "Adelie") %>%
   mutate(flipper_rank = case_when(
     flipper_length_mm < 200 ~ 1,
     flipper_length_mm >= 200 ~ 2,
@@ -1539,8 +1546,8 @@ Add a new column to `penguins` called `study_year` that contains:
 ```
 
 ```{r case_when_q1-hint}
-penguins %>% 
-  mutate(study_year = 
+penguins %>%
+  mutate(study_year =
            case_when(
              year == 2007 ~ "Year 1",
              year == 2008 ~ "Year 2",
@@ -1557,10 +1564,10 @@ Starting with `penguins`, only keep observations for chinstrap penguins, then on
 ```
 
 ```{r case_when_q2-hint}
-penguins %>% 
-  filter(species == "_____") %>% 
-  select(_____, _____) %>% 
-  mutate(fm_ratio = _____ / _____) %>% 
+penguins %>%
+  filter(species == "_____") %>%
+  select(_____, _____) %>%
+  mutate(fm_ratio = _____ / _____) %>%
   mutate(ratio_bin = case_when(
     fm_ratio >= 0.05 ~ "_____",
     fm_ratio < 0.05 ~ "_____",
@@ -1569,10 +1576,10 @@ penguins %>%
 ```
 
 ```{r case_when_q2-solution}
-penguins %>% 
-  filter(species == "Chinstrap") %>% 
-  select(flipper_length_mm, body_mass_g) %>% 
-  mutate(fm_ratio = flipper_length_mm / body_mass_g) %>% 
+penguins %>%
+  filter(species == "Chinstrap") %>%
+  select(flipper_length_mm, body_mass_g) %>%
+  mutate(fm_ratio = flipper_length_mm / body_mass_g) %>%
   mutate(ratio_bin = case_when(
     fm_ratio >= 0.05 ~ "high",
     fm_ratio < 0.05 ~ "low",
