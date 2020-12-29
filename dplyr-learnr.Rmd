@@ -1523,3 +1523,60 @@ penguins %>%
 <br>
 <br>
 <hr class="examples">
+
+### CASE_WHEN PRACTICE ACTIVITIES
+
+#### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 1
+
+Add a new column to `penguins` called `study_year` that contains:
+
+- "Year 1" if the year is 2007
+- "Year 2" if the year is 2008
+- "Year 3" if the year is 2009
+
+```{r case_when_q1, exercise = TRUE}
+
+```
+
+```{r case_when_q1-hint}
+penguins %>% 
+  mutate(study_year = 
+           case_when(
+             year == 2007 ~ "Year 1",
+             year == 2008 ~ "Year 2",
+             year == 2009 ~ "Year 3"
+           ))
+```
+
+#### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 2
+
+Starting with `penguins`, only keep observations for chinstrap penguins, then only keep the `flipper_length_mm` and `body_mass_g` variables. Add a new column called `fm_ratio` that contains the ratio of flipper length to body mass for each penguin. Next, add another column named `ratio_bin` which contains the word "high" if `fm_ratio` is greater than or equal to 0.05, "low" if the ratio is less than 0.05, and "no record" if anything else (e.g. `NA`).
+
+```{r case_when_q2, exercise = TRUE}
+
+```
+
+```{r case_when_q2-hint}
+penguins %>% 
+  filter(species == "_____") %>% 
+  select(_____, _____) %>% 
+  mutate(fm_ratio = _____ / _____) %>% 
+  mutate(ratio_bin = case_when(
+    fm_ratio >= 0.05 ~ "_____",
+    fm_ratio < 0.05 ~ "_____",
+    TRUE ~ "_____"
+  ))
+```
+
+```{r case_when_q2-solution}
+penguins %>% 
+  filter(species == "Chinstrap") %>% 
+  select(flipper_length_mm, body_mass_g) %>% 
+  mutate(fm_ratio = flipper_length_mm / body_mass_g) %>% 
+  mutate(ratio_bin = case_when(
+    fm_ratio >= 0.05 ~ "high",
+    fm_ratio < 0.05 ~ "low",
+    TRUE ~ "no record"
+  ))
+```
+
