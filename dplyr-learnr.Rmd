@@ -310,88 +310,88 @@ penguins %>%
   filter(species == "Gentoo", bill_depth_mm > 15.5)
 ```
 
-#### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 2
+<!-- #### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 2 -->
 
-Use `filter()` to create a subset from `penguins` that contains observations for male penguins recorded at Dream and Biscoe Islands.
+<!-- Use `filter()` to create a subset from `penguins` that contains observations for male penguins recorded at Dream and Biscoe Islands. -->
 
-```{r filter_q2, exercise = TRUE}
+<!-- ```{r filter_q2, exercise = TRUE} -->
 
-```
+<!-- ``` -->
 
-```{r filter_q2-hint}
-penguins %>%
-  filter(island %in% c("_____","_____"),
-         sex == "_____")
-```
+<!-- ```{r filter_q2-hint} -->
+<!-- penguins %>% -->
+<!--   filter(island %in% c("_____","_____"), -->
+<!--          sex == "_____") -->
+<!-- ``` -->
 
-```{r filter_q2-solution}
-penguins %>%
-  filter(island %in% c("Dream","Biscoe"),
-         sex == "male")
-```
+<!-- ```{r filter_q2-solution} -->
+<!-- penguins %>% -->
+<!--   filter(island %in% c("Dream","Biscoe"), -->
+<!--          sex == "male") -->
+<!-- ``` -->
 
-#### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 3
+<!-- #### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 3 -->
 
-Use `filter()` to create a subset from `penguins` that contains observations for female Adélie penguins with bill lengths less than 35 mm.
+<!-- Use `filter()` to create a subset from `penguins` that contains observations for female Adélie penguins with bill lengths less than 35 mm. -->
 
-```{r filter_q3, exercise = TRUE}
+<!-- ```{r filter_q3, exercise = TRUE} -->
 
-```
+<!-- ``` -->
 
-```{r filter_q3-hint}
-penguins %>%
-  filter(sex == "_____",
-         species == "_____",
-         bill_length_mm < _____)
-```
+<!-- ```{r filter_q3-hint} -->
+<!-- penguins %>% -->
+<!--   filter(sex == "_____", -->
+<!--          species == "_____", -->
+<!--          bill_length_mm < _____) -->
+<!-- ``` -->
 
 
-```{r filter_q3-solution}
-penguins %>%
-  filter(sex == "female",
-         species == "Adelie",
-         bill_length_mm < 35)
-```
+<!-- ```{r filter_q3-solution} -->
+<!-- penguins %>% -->
+<!--   filter(sex == "female", -->
+<!--          species == "Adelie", -->
+<!--          bill_length_mm < 35) -->
+<!-- ``` -->
 
-#### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 4
+<!-- #### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 4 -->
 
-Create a subset from `penguins` containing observations for female chinstrap penguins on Dream and Torgersen Islands.
+<!-- Create a subset from `penguins` containing observations for female chinstrap penguins on Dream and Torgersen Islands. -->
 
-```{r filter_q4, exercise = TRUE}
+<!-- ```{r filter_q4, exercise = TRUE} -->
 
-```
+<!-- ``` -->
 
-```{r filter_q4-hint}
-penguins %>%
-  filter(sex == "____",
-         species == "____") %>%
-  filter(island %in% c("____","____"))
-```
+<!-- ```{r filter_q4-hint} -->
+<!-- penguins %>% -->
+<!--   filter(sex == "____", -->
+<!--          species == "____") %>% -->
+<!--   filter(island %in% c("____","____")) -->
+<!-- ``` -->
 
-```{r filter_q4-solution}
-penguins %>%
-  filter(sex == "female",
-         species == "chinstrap") %>%
-  filter(island %in% c("Dream","Torgersen"))
-```
+<!-- ```{r filter_q4-solution} -->
+<!-- penguins %>% -->
+<!--   filter(sex == "female", -->
+<!--          species == "chinstrap") %>% -->
+<!--   filter(island %in% c("Dream","Torgersen")) -->
+<!-- ``` -->
 
-#### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 5
+<!-- #### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 5 -->
 
-Create a subset from `penguins` that contains penguins that are either gentoos **OR** have a body mass greater than 4500 g.
+<!-- Create a subset from `penguins` that contains penguins that are either gentoos **OR** have a body mass greater than 4500 g. -->
 
-```{r filter_q5, exercise = TRUE}
+<!-- ```{r filter_q5, exercise = TRUE} -->
 
-```
+<!-- ``` -->
 
-```{r filter_q5-hint}
-penguins %>%
-  filter(species == "_____" | body_mass_g > _____)
-```
+<!-- ```{r filter_q5-hint} -->
+<!-- penguins %>% -->
+<!--   filter(species == "_____" | body_mass_g > _____) -->
+<!-- ``` -->
 
-```{r filter_q5-solution}
-penguins %>%
-  filter(species == "Gentoo" | body_mass_g > 4500)
-```
+<!-- ```{r filter_q5-solution} -->
+<!-- penguins %>% -->
+<!--   filter(species == "Gentoo" | body_mass_g > 4500) -->
+<!-- ``` -->
 
 
 
