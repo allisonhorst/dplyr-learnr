@@ -169,229 +169,229 @@ In the code below, we **filter** the **penguins** data to only keep rows where t
 dplyr::filter(penguins, species == "Chinstrap")
 ```
 
-<!-- #### `r fa("fas fa-robot", fill = "purple")` Example 2 -->
+#### `r fa("fas fa-robot", fill = "purple")` Example 2
 
-<!-- From `penguins`, filter to only include chinstrap and gentoo penguins. -->
+From `penguins`, filter to only include chinstrap and gentoo penguins.
 
-<!-- First, we need to be careful about the type of statement we're going to write. If we want to create a subset that contains chinstraps **and** gentoos, that means we want to keep rows where species matches "Chinstrap" **OR** "Gentoo". We can do this a couple different ways: -->
+First, we need to be careful about the type of statement we're going to write. If we want to create a subset that contains chinstraps **and** gentoos, that means we want to keep rows where species matches "Chinstrap" **OR** "Gentoo". We can do this a couple different ways:
 
-<!-- - Use the "or" operator, `|` (the vertical line), between conditions -->
-<!-- - Use the `%in%` operator, followed by a vector of values to look for a match in -->
+- Use the "or" operator, `|` (the vertical line), between conditions
+- Use the `%in%` operator, followed by a vector of values to look for a match in
 
-<!-- ```{r, echo = TRUE, message = FALSE, warning = FALSE, eval = FALSE} -->
-<!-- # First way: using the or | operator -->
-<!-- dplyr::filter(penguins, species == "Chinstrap" | species == "Gentoo") -->
-<!-- ``` -->
+```{r, echo = TRUE, message = FALSE, warning = FALSE, eval = FALSE}
+# First way: using the or | operator
+dplyr::filter(penguins, species == "Chinstrap" | species == "Gentoo")
+```
 
-<!-- Does the same thing as... -->
+Does the same thing as...
 
-<!-- ```{r, echo = TRUE, message = FALSE, warning = FALSE} -->
-<!-- # Second way: using the %in% operator -->
-<!-- dplyr::filter(penguins, species %in% c("Chinstrap", "Gentoo")) -->
-<!-- ``` -->
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+# Second way: using the %in% operator
+dplyr::filter(penguins, species %in% c("Chinstrap", "Gentoo"))
+```
 
-<!-- Note that the output is identical for both methods above. It may seem like the first way is easier right now - but if you have a lot of potential matches you're looking for, the second way reduces redundancy and increases code readability. -->
+Note that the output is identical for both methods above. It may seem like the first way is easier right now - but if you have a lot of potential matches you're looking for, the second way reduces redundancy and increases code readability.
 
-<!-- **WARNING:** The condition `letter == c("A", "B")` is **very different** from `letter %in% c("A", "B")` - you will probably not EVER want to do the first, because it will work its way through the rows of the `letter` column looking for the strings "A" then "B" **in that order**. In other words, it will look for "A" in Row 1, then for "B" in Row 2, then "A" in Row 3, then "B" in Row 4, etc. - when what you probably want to do is just ask "Look in each row and keep it if it's "A" or "B"", which is what the second option (`letter %in% c("A", "B")`) will do. -->
+**WARNING:** The condition `letter == c("A", "B")` is **very different** from `letter %in% c("A", "B")` - you will probably not EVER want to do the first, because it will work its way through the rows of the `letter` column looking for the strings "A" then "B" **in that order**. In other words, it will look for "A" in Row 1, then for "B" in Row 2, then "A" in Row 3, then "B" in Row 4, etc. - when what you probably want to do is just ask "Look in each row and keep it if it's "A" or "B"", which is what the second option (`letter %in% c("A", "B")`) will do.
 
-<!-- #### `r fa("fas fa-robot", fill = "purple")` Example 3 -->
+#### `r fa("fas fa-robot", fill = "purple")` Example 3
 
-<!-- Introducing the pipe operator (`%>%`)! -->
+Introducing the pipe operator (`%>%`)!
 
-<!-- In the examples above, we specified the dataset within the `filter()` function. That's fine for now, but moving forward we'll want to use the pipe operator (`%>%`) to perform operations in logical sequence. You can think of the pipe operator as saying "and then" in your code. For example: -->
+In the examples above, we specified the dataset within the `filter()` function. That's fine for now, but moving forward we'll want to use the pipe operator (`%>%`) to perform operations in logical sequence. You can think of the pipe operator as saying "and then" in your code. For example:
 
-<!-- Collect kindling AND THEN open the flue AND THEN start fire using the pipe looks like: -->
+Collect kindling AND THEN open the flue AND THEN start fire using the pipe looks like:
 
-<!-- ``` -->
-<!-- Collect kindling %>% -->
-<!--         open the flue %>% -->
-<!--         start fire -->
-<!-- ``` -->
+```
+Collect kindling %>%
+        open the flue %>%
+        start fire
+```
 
-<!-- Let's say we want to use the pipe operator in the example above to filter for chinstraps. We start by telling R the data frame name, AND THEN what to do with it: data `%>%` thing, like this: -->
+Let's say we want to use the pipe operator in the example above to filter for chinstraps. We start by telling R the data frame name, AND THEN what to do with it: data `%>%` thing, like this:
 
-<!-- ```{r, echo = TRUE, message = FALSE, warning = FALSE} -->
-<!-- penguins %>% -->
-<!--   dplyr::filter(species == "Chinstrap") -->
-<!-- ``` -->
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+penguins %>%
+  dplyr::filter(species == "Chinstrap")
+```
 
-<!-- Moving forward in this tutorial, we'll use the pipe operator. -->
+Moving forward in this tutorial, we'll use the pipe operator.
 
-<!-- #### `r fa("fas fa-robot", fill = "purple")` Example 4 -->
+#### `r fa("fas fa-robot", fill = "purple")` Example 4
 
-<!-- From `penguins`, make a subset with Adélie penguins on Dream Island. -->
+From `penguins`, make a subset with Adélie penguins on Dream Island.
 
-<!-- Think carefully above the conditions. In this case, we only want to keep observations (rows) where the species is "Adelie" **AND** the island is "Dream" - a row should only be retained if both of those conditions are met. There are a number of ways you can write an **and** statement within `filter()`, including: -->
+Think carefully above the conditions. In this case, we only want to keep observations (rows) where the species is "Adelie" **AND** the island is "Dream" - a row should only be retained if both of those conditions are met. There are a number of ways you can write an **and** statement within `filter()`, including:
 
-<!-- - A comma between conditions indicates both must be met (`filter(x == "a", y == "b")`) -->
-<!-- - An ampersand between conditions indicates both must be met (`filter(x == "a" & y == "b")`) -->
+- A comma between conditions indicates both must be met (`filter(x == "a", y == "b")`)
+- An ampersand between conditions indicates both must be met (`filter(x == "a" & y == "b")`)
 
-<!-- We can create a subset starting from penguins that only contains observations for Adélie penguins on Dream Island as follows: -->
+We can create a subset starting from penguins that only contains observations for Adélie penguins on Dream Island as follows:
 
-<!-- ```{r, echo = TRUE, message = FALSE, warning = FALSE} -->
-<!-- penguins %>% -->
-<!--   filter(species == "Adelie", island == "Dream") -->
-<!-- ``` -->
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+penguins %>%
+  filter(species == "Adelie", island == "Dream")
+```
 
-<!-- ### Keep or exclude rows based on values -->
+### Keep or exclude rows based on values
 
-<!-- We can also use `dplyr::filter()` to keep or exclude rows based on variable values using standard logical operators (`==`, `<=`, `>=`, `<`, `>`). -->
+We can also use `dplyr::filter()` to keep or exclude rows based on variable values using standard logical operators (`==`, `<=`, `>=`, `<`, `>`).
 
-<!-- Unlike when setting conditions for strings, values within `filter()` don't need to be within quotation marks. -->
+Unlike when setting conditions for strings, values within `filter()` don't need to be within quotation marks.
 
-<!-- #### `r fa("fas fa-robot", fill = "purple")` Example 5 -->
+#### `r fa("fas fa-robot", fill = "purple")` Example 5
 
-<!-- From `penguins`, keep penguins with a flipper length greater than 200 mm. -->
+From `penguins`, keep penguins with a flipper length greater than 200 mm.
 
-<!-- ```{r, echo = TRUE, message = FALSE, warning = FALSE} -->
-<!-- penguins %>% -->
-<!--   filter(flipper_length_mm > 200) -->
-<!-- ``` -->
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+penguins %>%
+  filter(flipper_length_mm > 200)
+```
 
-<!-- #### `r fa("fas fa-robot", fill = "purple")` Example 6 -->
+#### `r fa("fas fa-robot", fill = "purple")` Example 6
 
-<!-- From `penguins`, keep observations where body mass less than or equal to 2900 g. -->
+From `penguins`, keep observations where body mass less than or equal to 2900 g.
 
-<!-- ```{r, echo = TRUE, message = FALSE, warning = FALSE} -->
-<!-- penguins %>% -->
-<!--   filter(body_mass_g <= 2900) -->
-<!-- ``` -->
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+penguins %>%
+  filter(body_mass_g <= 2900)
+```
 
-<!-- #### `r fa("fas fa-robot", fill = "purple")` Example 7 -->
+#### `r fa("fas fa-robot", fill = "purple")` Example 7
 
-<!-- From `penguins`, keep observations for Adélie penguins with a bill length greater than 40 mm. -->
+From `penguins`, keep observations for Adélie penguins with a bill length greater than 40 mm.
 
-<!-- ```{r, echo = TRUE, message = FALSE, warning = FALSE} -->
-<!-- penguins %>% -->
-<!--   filter(species == "Adelie", bill_length_mm > 40) -->
-<!-- ``` -->
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+penguins %>%
+  filter(species == "Adelie", bill_length_mm > 40)
+```
 
-<!-- ### Exclude rows based on conditions -->
+### Exclude rows based on conditions
 
-<!-- Imagine you have a dataset that contains 10 penguin species, and you want to keep observations for 8 of those species. That would be a long list of species to match - if you were referring to the ones you want to keep. -->
+Imagine you have a dataset that contains 10 penguin species, and you want to keep observations for 8 of those species. That would be a long list of species to match - if you were referring to the ones you want to keep.
 
-<!-- But we can also use `filter()` by saying what we **don't** want to keep, for example we could just list the two species we want to *exclude* to reduce the typing we have to do. -->
+But we can also use `filter()` by saying what we **don't** want to keep, for example we could just list the two species we want to *exclude* to reduce the typing we have to do.
 
-<!-- Use `!=` to indicate "does not match" within the `filter()` function. -->
+Use `!=` to indicate "does not match" within the `filter()` function.
 
-<!-- #### `r fa("fas fa-robot", fill = "purple")` Example 8 -->
+#### `r fa("fas fa-robot", fill = "purple")` Example 8
 
-<!-- Exclude observations for chinstraps from the `penguins` data. In the code below, the `!=` operator is used within `filter()` to keep observations where the species variable **does not match** "Chinstrap". -->
+Exclude observations for chinstraps from the `penguins` data. In the code below, the `!=` operator is used within `filter()` to keep observations where the species variable **does not match** "Chinstrap".
 
-<!-- ```{r, echo = TRUE, message = FALSE, warning = FALSE} -->
-<!-- penguins %>% -->
-<!--   filter(species != "Chinstrap") -->
-<!-- ``` -->
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+penguins %>%
+  filter(species != "Chinstrap")
+```
 
-<!-- <br> -->
-<!-- <br> -->
-<!-- <hr class="examples"> -->
+<br>
+<br>
+<hr class="examples">
 
-<!-- ### FILTER PRACTICE ACTIVITIES -->
+### FILTER PRACTICE ACTIVITIES
 
 
-<!-- In the code chunks below, write your own code to practice with the `dplyr::filter()` function. If you get stuck, click on the "Hint" and "Solution" buttons. -->
+In the code chunks below, write your own code to practice with the `dplyr::filter()` function. If you get stuck, click on the "Hint" and "Solution" buttons.
 
-<!-- #### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 1 -->
+#### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 1
 
-<!-- Use `filter()` to create a subset from `penguins` that only contains gentoo penguins with a bill depth greater than or equal to 15.5 millimeters. -->
+Use `filter()` to create a subset from `penguins` that only contains gentoo penguins with a bill depth greater than or equal to 15.5 millimeters.
 
-<!-- ```{r filter_q1, exercise = TRUE} -->
+```{r filter_q1, exercise = TRUE}
 
-<!-- ``` -->
+```
 
-<!-- ```{r filter_q1-hint} -->
-<!-- penguins %>% -->
-<!--   filter(species == "", bill_depth_mm > ___) -->
-<!-- ``` -->
+```{r filter_q1-hint}
+penguins %>%
+  filter(species == "", bill_depth_mm > ___)
+```
 
-<!-- ```{r filter_q1-solution} -->
-<!-- penguins %>% -->
-<!--   filter(species == "Gentoo", bill_depth_mm > 15.5) -->
-<!-- ``` -->
+```{r filter_q1-solution}
+penguins %>%
+  filter(species == "Gentoo", bill_depth_mm > 15.5)
+```
 
-<!-- #### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 2 -->
+#### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 2
 
-<!-- Use `filter()` to create a subset from `penguins` that contains observations for male penguins recorded at Dream and Biscoe Islands. -->
+Use `filter()` to create a subset from `penguins` that contains observations for male penguins recorded at Dream and Biscoe Islands.
 
-<!-- ```{r filter_q2, exercise = TRUE} -->
+```{r filter_q2, exercise = TRUE}
 
-<!-- ``` -->
+```
 
-<!-- ```{r filter_q2-hint} -->
-<!-- penguins %>% -->
-<!--   filter(island %in% c("_____","_____"), -->
-<!--          sex == "_____") -->
-<!-- ``` -->
+```{r filter_q2-hint}
+penguins %>%
+  filter(island %in% c("_____","_____"),
+         sex == "_____")
+```
 
-<!-- ```{r filter_q2-solution} -->
-<!-- penguins %>% -->
-<!--   filter(island %in% c("Dream","Biscoe"), -->
-<!--          sex == "male") -->
-<!-- ``` -->
+```{r filter_q2-solution}
+penguins %>%
+  filter(island %in% c("Dream","Biscoe"),
+         sex == "male")
+```
 
-<!-- #### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 3 -->
+#### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 3
 
-<!-- Use `filter()` to create a subset from `penguins` that contains observations for female Adélie penguins with bill lengths less than 35 mm. -->
+Use `filter()` to create a subset from `penguins` that contains observations for female Adélie penguins with bill lengths less than 35 mm.
 
-<!-- ```{r filter_q3, exercise = TRUE} -->
+```{r filter_q3, exercise = TRUE}
 
-<!-- ``` -->
+```
 
-<!-- ```{r filter_q3-hint} -->
-<!-- penguins %>% -->
-<!--   filter(sex == "_____", -->
-<!--          species == "_____", -->
-<!--          bill_length_mm < _____) -->
-<!-- ``` -->
+```{r filter_q3-hint}
+penguins %>%
+  filter(sex == "_____",
+         species == "_____",
+         bill_length_mm < _____)
+```
 
 
-<!-- ```{r filter_q3-solution} -->
-<!-- penguins %>% -->
-<!--   filter(sex == "female", -->
-<!--          species == "Adelie", -->
-<!--          bill_length_mm < 35) -->
-<!-- ``` -->
+```{r filter_q3-solution}
+penguins %>%
+  filter(sex == "female",
+         species == "Adelie",
+         bill_length_mm < 35)
+```
 
-<!-- #### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 4 -->
+#### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 4
 
-<!-- Create a subset from `penguins` containing observations for female chinstrap penguins on Dream and Torgersen Islands. -->
+Create a subset from `penguins` containing observations for female chinstrap penguins on Dream and Torgersen Islands.
 
-<!-- ```{r filter_q4, exercise = TRUE} -->
+```{r filter_q4, exercise = TRUE}
 
-<!-- ``` -->
+```
 
-<!-- ```{r filter_q4-hint} -->
-<!-- penguins %>% -->
-<!--   filter(sex == "____", -->
-<!--          species == "____") %>% -->
-<!--   filter(island %in% c("____","____")) -->
-<!-- ``` -->
+```{r filter_q4-hint}
+penguins %>%
+  filter(sex == "____",
+         species == "____") %>%
+  filter(island %in% c("____","____"))
+```
 
-<!-- ```{r filter_q4-solution} -->
-<!-- penguins %>% -->
-<!--   filter(sex == "female", -->
-<!--          species == "chinstrap") %>% -->
-<!--   filter(island %in% c("Dream","Torgersen")) -->
-<!-- ``` -->
+```{r filter_q4-solution}
+penguins %>%
+  filter(sex == "female",
+         species == "chinstrap") %>%
+  filter(island %in% c("Dream","Torgersen"))
+```
 
-<!-- #### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 5 -->
+#### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 5
 
-<!-- Create a subset from `penguins` that contains penguins that are either gentoos **OR** have a body mass greater than 4500 g. -->
+Create a subset from `penguins` that contains penguins that are either gentoos **OR** have a body mass greater than 4500 g.
 
-<!-- ```{r filter_q5, exercise = TRUE} -->
+```{r filter_q5, exercise = TRUE}
 
-<!-- ``` -->
+```
 
-<!-- ```{r filter_q5-hint} -->
-<!-- penguins %>% -->
-<!--   filter(species == "_____" | body_mass_g > _____) -->
-<!-- ``` -->
+```{r filter_q5-hint}
+penguins %>%
+  filter(species == "_____" | body_mass_g > _____)
+```
 
-<!-- ```{r filter_q5-solution} -->
-<!-- penguins %>% -->
-<!--   filter(species == "Gentoo" | body_mass_g > 4500) -->
-<!-- ``` -->
+```{r filter_q5-solution}
+penguins %>%
+  filter(species == "Gentoo" | body_mass_g > 4500)
+```
 
 
 
