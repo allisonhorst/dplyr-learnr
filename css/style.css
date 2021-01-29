@@ -138,9 +138,8 @@ code {
 /*------- Hyperlinks --------*/
 a {
     font-family: 'Tajawal', sans-serif;
-    color: darkorchid;
+    color: indigo;
     text-decoration: none;
-    font-weight: bold;
 }
 
 a:hover, a:focus {

@@ -28,11 +28,11 @@ knitr::opts_chunk$set(echo = FALSE)
 
 In this tutorial, we'll learn some basic functions to help you work with data using functions in the `dplyr` package, part of the `tidyverse` in *R*. 
 
-#### What is the `tidyverse`?
+#### What is the tidyverse?
 
-The [`tidyverse`](https://www.tidyverse.org/) is a collection of packages that contain useful functions for working with and visualizing data. You don't need to install the `tidyverse` to write or run code in this tutorial, since it's already attached behind the scenes (but you can install it with `install.packages("tidyverse")` to work with it on your own outside of this tutorial).
+The [tidyverse](https://www.tidyverse.org/) is a collection of packages that contain useful functions for working with and visualizing data (and a bunch of other stuff). You don't need to install the `tidyverse` to write or run code in this tutorial, since it's already attached behind the scenes, but you can install it with `install.packages("tidyverse")` to work with it on your own outside of this tutorial.
 
-#### What is `dplyr`?
+#### What is dplyr?
 
 `dplyr` is one package in the tidyverse. It is the home to many functions that make it easier for us to work with data. Those include things like selecting specific columns, deciding which rows to keep based on whether or not they match our conditions, and finding summary statistics for different variables and groups. Sometimes we call these steps part of "data wrangling." 
 
@@ -41,6 +41,8 @@ The [`tidyverse`](https://www.tidyverse.org/) is a collection of packages that c
 knitr::include_graphics("images/data_wrangler.png") 
 
 ```
+
+`dplyr` is awesome.
 
 #### What's in this tutorial? 
 
