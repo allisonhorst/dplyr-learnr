@@ -1049,6 +1049,7 @@ penguins %>%
 Use the combination of `group_by()` and `summarize()` to find find summary statistics for different groups, and put them in a nice table.
 
 From [dplyr.tidyverse.org](https://dplyr.tidyverse.org/):
+
 - `group_by()` "takes an existing tbl and converts it into a grouped tbl where operations are performed 'by group'"
 - `summarize()` "creates a new data frame. It will have one (or more) rows for each combination of grouping variables; if there are no grouping variables, the output will have a single row summarising all observations in the input. It will contain one column for each grouping variable and one column for each of the summary statistics that you have specified"
 

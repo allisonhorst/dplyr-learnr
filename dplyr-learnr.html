@@ -2138,7 +2138,11 @@ male
 <h2>8. dplyr::group_by() %&gt;% summarize()</h2>
 <p><a href="https://dplyr.tidyverse.org/reference/group_by.html">CLICK HERE</a> for <code>group_by()</code> documentation, and <a href="https://dplyr.tidyverse.org/reference/summarise.html">here</a> for <code>summarize()</code> documentation, from tidyverse.org.</p>
 <p>Use the combination of <code>group_by()</code> and <code>summarize()</code> to find find summary statistics for different groups, and put them in a nice table.</p>
-<p>From <a href="https://dplyr.tidyverse.org/">dplyr.tidyverse.org</a>: - <code>group_by()</code> “takes an existing tbl and converts it into a grouped tbl where operations are performed ‘by group’” - <code>summarize()</code> “creates a new data frame. It will have one (or more) rows for each combination of grouping variables; if there are no grouping variables, the output will have a single row summarising all observations in the input. It will contain one column for each grouping variable and one column for each of the summary statistics that you have specified”</p>
+<p>From <a href="https://dplyr.tidyverse.org/">dplyr.tidyverse.org</a>:</p>
+<ul>
+<li><code>group_by()</code> “takes an existing tbl and converts it into a grouped tbl where operations are performed ‘by group’”</li>
+<li><code>summarize()</code> “creates a new data frame. It will have one (or more) rows for each combination of grouping variables; if there are no grouping variables, the output will have a single row summarising all observations in the input. It will contain one column for each grouping variable and one column for each of the summary statistics that you have specified”</li>
+</ul>
 <p>Basically, specify groups within your data with <code>group_by()</code>, then use <code>summarize()</code> to calculate something (e.g. the mean or other statistic) for each group, &amp; return it in a nice table. It’s a powerhouse combo.</p>
 <p>As a reminder for the following examples, here’s a sample from the <strong>penguins</strong> data (5 observations / 344 total).</p>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
