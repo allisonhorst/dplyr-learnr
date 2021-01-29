@@ -1,0 +1,12 @@
+name: dplyr-learnr
+title: dplyr-learnr
+username:
+account: allisonhorst
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3544451
+bundleId: 4156030
+url: https://allisonhorst.shinyapps.io/dplyr-learnr/
+when: 1611889040.18808
+asMultiple: FALSE
+asStatic: FALSE

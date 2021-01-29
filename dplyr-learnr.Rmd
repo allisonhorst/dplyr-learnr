@@ -8,7 +8,7 @@ runtime: shiny_prerendered
 ---
 
 ```{r setup, include=FALSE}
-
+library(shiny)
 library(learnr)
 library(tidyverse)
 # library(palmerpenguins)
@@ -102,7 +102,7 @@ You do **not** need to import the data to work through this tutorial - the data 
 
 #### A bit about the penguins:
 
-The 3 species of penguins in this data set are Adélie, chinstrap and gentoo. They are all awesome and adorable.
+The 3 species of penguins in this data set are Adelie, chinstrap and gentoo. They are all awesome and adorable.
 
 ```{r, echo=FALSE, out.width="100%", fig.align = "center"}
 knitr::include_graphics("images/lter_penguins.png")
@@ -219,14 +219,14 @@ Moving forward in this tutorial, we'll use the pipe operator.
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 4
 
-From `penguins`, make a subset with Adélie penguins on Dream Island.
+From `penguins`, make a subset with Adelie penguins on Dream Island.
 
 Think carefully above the conditions. In this case, we only want to keep observations (rows) where the species is "Adelie" **AND** the island is "Dream" - a row should only be retained if both of those conditions are met. There are a number of ways you can write an **and** statement within `filter()`, including:
 
 - A comma between conditions indicates both must be met (`filter(x == "a", y == "b")`)
 - An ampersand between conditions indicates both must be met (`filter(x == "a" & y == "b")`)
 
-We can create a subset starting from penguins that only contains observations for Adélie penguins on Dream Island as follows:
+We can create a subset starting from penguins that only contains observations for Adelie penguins on Dream Island as follows:
 
 ```{r, echo = TRUE, message = FALSE, warning = FALSE}
 penguins %>%
@@ -259,7 +259,7 @@ penguins %>%
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 7
 
-From `penguins`, keep observations for Adélie penguins with a bill length greater than 40 mm.
+From `penguins`, keep observations for Adelie penguins with a bill length greater than 40 mm.
 
 ```{r, echo = TRUE, message = FALSE, warning = FALSE}
 penguins %>%
@@ -332,7 +332,7 @@ penguins %>%
 
 #### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 3
 
-Use `filter()` to create a subset from `penguins` that contains observations for female Adélie penguins with bill lengths less than 35 mm.
+Use `filter()` to create a subset from `penguins` that contains observations for female Adelie penguins with bill lengths less than 35 mm.
 
 ```{r filter_q3, exercise = TRUE}
 
@@ -1102,9 +1102,9 @@ penguins %>%
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 4
 
-Use `group_by()` and `summarize()` to prepare a summary table containing the maximum and minimum flipper length for male Adélie penguins, grouped by island.
+Use `group_by()` and `summarize()` to prepare a summary table containing the maximum and minimum flipper length for male Adelie penguins, grouped by island.
 
-Here, we'll first use `filter()` to only keep rows for male Adélie penguins, then use `group_by()` and `summarize()` to find the minimum and maximum flipper length **by island**, & put them in a nice table.
+Here, we'll first use `filter()` to only keep rows for male Adelie penguins, then use `group_by()` and `summarize()` to find the minimum and maximum flipper length **by island**, & put them in a nice table.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
 penguins %>%
@@ -1324,7 +1324,7 @@ penguins %>%
 
 #### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 2
 
-Starting with `penguins`, only keep observations for Adélie penguins, then use `across()` to find the maximum value for any numeric variable (hint: `where(is.numeric)`) for each island (i.e. group by island).
+Starting with `penguins`, only keep observations for Adelie penguins, then use `across()` to find the maximum value for any numeric variable (hint: `where(is.numeric)`) for each island (i.e. group by island).
 
 ```{r across_q2, exercise = TRUE}
 
@@ -1457,7 +1457,7 @@ penguins %>%
 
 #### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 2
 
-Starting with `penguins`, filter to only keep Adélie and gentoo penguins, then find counts by species and sex.
+Starting with `penguins`, filter to only keep Adelie and gentoo penguins, then find counts by species and sex.
 
 ```{r count_q2, exercise = TRUE}
 
@@ -1511,7 +1511,7 @@ Starting with `penguins`:
 
 - Limit the columns to `species`, `year`, and `flipper_length_mm`
 - Rename the `year` column to `study_year`
-- Only keep observations for Adélie penguins
+- Only keep observations for Adelie penguins
 - Add a new column called `flipper_rank` that contains:
 
   - 1 if `flipper_length_mm` is < 200 mm
