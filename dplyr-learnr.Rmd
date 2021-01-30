@@ -955,7 +955,21 @@ penguins %>%
   mutate(bill_ratio = bill_length_mm / bill_depth_mm)
 ```
 
+
 #### `r fa("fas fa-robot", fill = "purple")` Example 3
+
+You can also add multiple new columns within a single `mutate()`. 
+
+For example, let's add three new columns to penguins within one `mutate()` function: one column that contains the bill ratio (bill length / bill depth), one that contains the body mass converted to kg, and one that contains the flipper length converted to meters. 
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
+penguins %>%
+  mutate(bill_ratio = bill_length_mm / bill_depth_mm,
+         body_mass_kg = body_mass_g / 1000,
+         flipper_length_m = flipper_length_mm / 1000)
+```
+
+#### `r fa("fas fa-robot", fill = "purple")` Example 4
 
 Add a new column with a sequence of values from 1 to the length of the data frame.
 
@@ -964,7 +978,7 @@ penguins %>%
   mutate(record_number = seq(1:n()))
 ```
 
-#### `r fa("fas fa-robot", fill = "purple")` Example 4
+#### `r fa("fas fa-robot", fill = "purple")` Example 5
 
 Convert the `island` variable to a character using `mutate`.
 
@@ -975,7 +989,7 @@ penguins %>%
   mutate(island = as.character(island))
 ```
 
-#### `r fa("fas fa-robot", fill = "purple")` Example 5
+#### `r fa("fas fa-robot", fill = "purple")` Example 6
 
 Use `fct_relevel()` within `mutate()` to reorder the factor levels of `island` to (1) Torgersen, (2) Biscoe, (3) Dream.
 
@@ -1041,6 +1055,32 @@ To `penguins`, add a new column `mass_lb` that contains penguin body mass, curre
 ```{r mutate_q3-solution}
 penguins %>%
   mutate(mass_lb = body_mass_g * 0.0022)
+```
+
+#### `r fa("fas fa-keyboard", fill = "purple")` Practice Activity 4
+
+Starting with `penguins`, do the following within a single `mutate()` function:
+
+- Convert the `species` variable to a character
+- Add a new column (called `flipper_cm` with flipper length in centimeters)
+- Convert the `island` column to lowercase
+
+```{r mutate_q4, exercise = TRUE}
+
+```
+
+```{r mutate_q4-hint}
+penguins %>%
+  mutate(species = as.character(_____),
+         flipper_cm = _____ / __,
+         island = tolower(_____))
+```
+
+```{r mutate_q4-solution}
+penguins %>%
+  mutate(species = as.character(species),
+         flipper_cm = flipper_length_mm / 10,
+         island = tolower(island))
 ```
 
 ## 8. dplyr::group_by() %>% summarize()
@@ -1252,6 +1292,26 @@ The `across()` function also happily accepts most helper functions introduced fo
 
 #### `r fa("fas fa-robot", fill = "purple")` Example 1
 
+Starting with `penguins`, use `across()` within `group_by() %>% summarize()` to make a summary table containing the mean value of all columns from bill depth (bill_depth_mm) to body mass (body_mass_g), grouped by species and year.
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
+penguins %>%
+  group_by(species, island) %>%
+  summarize(across(bill_depth_mm:body_mass_g, min, na.rm = TRUE))
+```
+
+#### `r fa("fas fa-robot", fill = "purple")` Example 2
+
+Starting with `penguins`, use `across()` within `group_by()` and `summarize()` to make a summary table containing the minimum values for bill length and body mass, grouped by penguin species.
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
+penguins %>%
+  group_by(species) %>%
+  summarize(across(c(bill_length_mm, body_mass_g), min, na.rm = TRUE))
+```
+
+#### `r fa("fas fa-robot", fill = "purple")` Example 3
+
 Starting with `penguins`, use `across()` within `group_by()` and `summarize()` to make a summary table containing the maximum value within any column starting with "bill", grouped by `year`.
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE}
@@ -1262,7 +1322,7 @@ penguins %>%
 
 Since what is presented in the table is the *maximum* value for bill length and depth, we probably want to update the column names. We could do that manually using `rename()`, or we can add the `.names = ` argument within `across()` as shown in the examples below.
 
-#### `r fa("fas fa-robot", fill = "purple")` Example 2
+#### `r fa("fas fa-robot", fill = "purple")` Example 4
 
 Repeat the example above, but add an argument that will automatically update the column names containing the maximum bill length and depth to start with "max_" followed by the original column name.
 
@@ -1272,7 +1332,7 @@ penguins %>%
   summarise(across(starts_with("bill"), max, na.rm = TRUE, .names = "max_{.col}"))
 ```
 
-#### `r fa("fas fa-robot", fill = "purple")` Example 3
+#### `r fa("fas fa-robot", fill = "purple")` Example 5
 
 Starting from `penguins`, create a summary table that finds the mean and standard deviation for all variables containing the string "length", grouped by penguin species. Update the column names to start with "avg_" or "sd_", followed by the original column names.
 
