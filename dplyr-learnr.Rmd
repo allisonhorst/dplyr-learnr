@@ -11,15 +11,15 @@ runtime: shiny_prerendered
 library(shiny)
 library(learnr)
 library(tidyverse)
-# library(palmerpenguins)
+library(palmerpenguins)
 library(kableExtra)
 library(fontawesome)
 library(here)
 
-penguins <- read_csv(here("data","penguins.csv")) %>% 
-  mutate(species = as.factor(species),
-         island = as.factor(island),
-         sex = as.factor(sex))
+# penguins <- read_csv(here("data","penguins.csv")) %>% 
+#   mutate(species = as.factor(species),
+#          island = as.factor(island),
+#          sex = as.factor(sex))
 
 knitr::opts_chunk$set(echo = FALSE)
 ```
@@ -41,8 +41,6 @@ The [tidyverse](https://www.tidyverse.org/) is a collection of packages that con
 knitr::include_graphics("images/data_wrangler.png") 
 
 ```
-
-`dplyr` is awesome.
 
 #### What's in this tutorial? 
 
@@ -86,11 +84,30 @@ Go ahead and try typing in some basic calculations in the area below, and notice
 
 ```
 
-Move on to meet the penguins in Section 2!
-
 ```{r, echo=FALSE, out.width="80%", fig.align = "center"}
 knitr::include_graphics("images/r_learners_sm.jpeg")  
 ```
+
+### Thank you to:
+
+#### `dplyr` creators & contributors! 
+
+Hadley Wickham, Romain François, Lionel Henry and Kirill Müller (2020). dplyr: A Grammar of Data Manipulation. R package version 1.0.2. https://CRAN.R-project.org/package=dplyr
+
+#### `tidyverse` creators & contributors! 
+
+Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source Software, 4(43), 1686, https://doi.org/10.21105/joss.01686
+
+#### `palmerpenguins` package coauthors 
+
+Thanks palmerpenguins team, Dr. Alison Hill & Dr. Kristen B. Gorman!
+
+Horst AM, Hill AP, Gorman KB (2020). palmerpenguins: Palmer Archipelago (Antarctica) penguin data. R package version 0.1.0. https://allisonhorst.github.io/palmerpenguins/
+
+**Valuable feedback and suggestions from:** 
+
+- Gordon Blasco (NCEAS)
+- Casey O'Hara (Bren School)
 
 <body>
     <a class="button" href="https://github.com/allisonhorst/dplyr-learnr">Fork GitHub repo
@@ -1653,3 +1670,9 @@ penguins %>%
   ))
 ```
 
+## Resources
+
+Want to learn more about `dplyr`, the `tidyverse`, or coding in R generally? Here are some great places to start: 
+
+- [R for Data Science](https://r4ds.had.co.nz/) by Hadley Wickham and Garrett Grolemund
+- [dplyr.tidyverse.org](https://dplyr.tidyverse.org/)
