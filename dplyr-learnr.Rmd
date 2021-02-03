@@ -16,10 +16,6 @@ library(kableExtra)
 library(fontawesome)
 library(here)
 
-# penguins <- read_csv(here("data","penguins.csv")) %>% 
-#   mutate(species = as.factor(species),
-#          island = as.factor(island),
-#          sex = as.factor(sex))
 
 knitr::opts_chunk$set(echo = FALSE)
 ```
