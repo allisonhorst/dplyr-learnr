@@ -30,6 +30,12 @@ The [tidyverse](https://www.tidyverse.org/) is a collection of packages that con
 
 #### What is dplyr?
 
+```{r, echo=FALSE, out.width="30%", fig.align = "left"}
+
+knitr::include_graphics("images/dplyr_hex.png") 
+
+```
+
 `dplyr` is one package in the tidyverse. It is the home to many functions that make it easier for us to work with data. Those include things like selecting specific columns, deciding which rows to keep based on whether or not they match our conditions, and finding summary statistics for different variables and groups. Sometimes we call these steps part of "data wrangling." 
 
 ```{r, echo=FALSE, out.width="100%", fig.align = "center", fig.cap = "Illustration from Hadley Wickham's 2019 talk, The Joy of Functional Programming"}
